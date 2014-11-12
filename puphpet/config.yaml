@@ -124,7 +124,7 @@ nginx:
             server_name: wipon-api.local
             server_aliases:
                 - www.wipon-api.local
-            www_root: /var/www
+            www_root: /var/www/web
             listen_port: '80'
             location: \.php$
             index_files:
