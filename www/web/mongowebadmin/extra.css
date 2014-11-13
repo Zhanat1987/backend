@@ -1,0 +1,32 @@
+.bracket-open {
+    float: right;
+    margin-top: -18px;
+}
+
+.x-grid-tree-node-expanded .x-tree-icon-parent.database-icon {
+    background-image: url('images/database-icon.png');
+}
+
+.database-icon {
+    background-image: url('images/database-icon.png');
+}
+
+.string {
+    color: red;
+}
+
+.int {
+    color: #002D71;
+}
+
+.bool {
+    color: #04408c;
+}
+
+.null {
+    color: #a4a4a4;
+}
+
+.value-key {
+    color: #2669B4;
+}

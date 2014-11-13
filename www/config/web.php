@@ -44,21 +44,28 @@ $config = [
             'rules' => [
                 'module/<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
             ],
-        ]
-
+        ],
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn' => 'mongodb://developer:password@localhost:27017/wipon',
+        ],
     ],
     'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
+    $allowedIps = ['127.0.0.1', '::1', '10.0.2.2'];
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = 'yii\debug\Module';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        'allowedIPs' => $allowedIps,
+    ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module', //adding gii module
-        'allowedIPs' => ['127.0.0.1', '::1', '10.0.2.2'], //allowing ip's
+        'allowedIPs' => $allowedIps, //allowing ip's
     ];
 }
 

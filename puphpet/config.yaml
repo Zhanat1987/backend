@@ -153,6 +153,7 @@ php:
             - fpm
             - imagick
             - mbstring
+            - mongo
         pear: {  }
         pecl:
             - pecl_http
@@ -237,7 +238,7 @@ sqlite:
     adminer: 0
     databases: {  }
 mongodb:
-    install: '0'
+    install: '1'
     settings:
         auth: 1
         port: '27017'
