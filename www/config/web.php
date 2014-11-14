@@ -47,7 +47,9 @@ $config = [
         ],
         'mongodb' => [
             'class' => '\yii\mongodb\Connection',
-            'dsn' => 'mongodb://developer:password@localhost:27017/wipon',
+//            'dsn' => 'mongodb://developer:password@localhost:27017/wipon',
+//            'dsn' => 'mongodb://localhost:27017',
+            'dsn' => 'mongodb://localhost:27017/wipon',
         ],
     ],
     'params' => $params,

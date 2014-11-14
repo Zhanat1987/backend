@@ -10,8 +10,7 @@ class m141113_091936_insert_test_values extends Migration
     public function safeUp()
     {
         $faker = Factory::create();
-        $userRows = $statusRows = $manufacturerRows =
-            $typeRows = $productRows = $itemRows = $scanRows = [];
+        $userRows = [];
         // insert into user table
         for ($i = 0; $i < 10; ++$i) {
             $userRows[] = [
@@ -21,7 +20,7 @@ class m141113_091936_insert_test_values extends Migration
         }
         $this->batchInsert('{{%user}}', ['phoneNumber', 'phoneUUID'], $userRows);
         // insert into status table
-        $statusRows[] = [
+        $statusRows = [
             [
                 'authentic',
                 'authentic icon',
@@ -47,7 +46,7 @@ class m141113_091936_insert_test_values extends Migration
         }
         $this->batchInsert('{{%status}}', ['description', 'icon', 'colour'], $statusRows);
         // insert into manufacturer table
-        $manufacturerRows[] = [
+        $manufacturerRows = [
             [
                 'Бахус',
                 'logo image',
@@ -77,7 +76,7 @@ class m141113_091936_insert_test_values extends Migration
         }
         $this->batchInsert('{{%manufacturer}}', ['name', 'brandLogo'], $manufacturerRows);
         // insert into type table
-        $typeRows[] = [
+        $typeRows = [
             [
                 'коньяқ',
             ],
@@ -98,7 +97,7 @@ class m141113_091936_insert_test_values extends Migration
         }
         $this->batchInsert('{{%type}}', ['description'], $typeRows);
         // insert into product table
-        $productRows[] = [
+        $productRows = [
             [
                 'ҚАЗАҚСТАН',
                 1,
@@ -153,7 +152,7 @@ class m141113_091936_insert_test_values extends Migration
         }
         $this->batchInsert('{{%product}}', ['name', 'typeId', 'image', 'description', 'manufacturerId'], $productRows);
         // insert into item table
-        $itemRows[] = [
+        $itemRows = [
             [
                 '017c93d1a143',
                 494283243,
@@ -198,7 +197,7 @@ class m141113_091936_insert_test_values extends Migration
             ],
             [
                 '01b8c5aa9368',
-                188115835,
+                1881158351,
                 1,
                 6,
             ],
@@ -213,7 +212,7 @@ class m141113_091936_insert_test_values extends Migration
         }
         $this->batchInsert('{{%item}}', ['code', 'number', 'statusId', 'productId'], $itemRows);
         // insert into item table
-        $scanRows[] = [
+        $scanRows = [
             [
                 1,
                 51.132349,

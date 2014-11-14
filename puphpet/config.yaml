@@ -10,12 +10,15 @@ vagrantfile-local:
         network:
             private_network: 192.168.56.101
             forwarded_port:
-                TQMuRKC9Y6tv:
+                ssh:
                     host: '9412'
                     guest: '22'
-                wEIN5cvkNYCB:
+                nginx:
                     host: '8080'
                     guest: '80'
+                mongoWeb:
+                    host: '28017'
+                    guest: '28017'
         post_up_message: ''
         provider:
             virtualbox:
@@ -163,6 +166,15 @@ php:
         session.save_path: /var/lib/php/session
     timezone: Asia/Almaty
     mod_php: 0
+xdebug:
+    install: '1'
+    settings:
+    xdebug.default_enable: '1'
+    xdebug.remote_autostart: '0'
+    xdebug.remote_connect_back: '1'
+    xdebug.remote_enable: '1'
+    xdebug.remote_handler: dbgp
+    xdebug.remote_port: '9000'
 hhvm:
     install: '0'
     nightly: 0

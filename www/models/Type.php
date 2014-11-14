@@ -12,6 +12,7 @@ use Yii;
  * @property integer $enable
  *
  * @property Product[] $products
+ * @property OptionalParameters $optionalParameters
  */
 class Type extends \yii\db\ActiveRecord
 {
@@ -54,4 +55,13 @@ class Type extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Product::className(), ['typeId' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOptionalParameters()
+    {
+        return $this->hasOne(OptionalParameters::className(), ['typeId' => 'id']);
+    }
+
 }

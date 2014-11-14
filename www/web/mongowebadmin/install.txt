@@ -1,7 +1,0 @@
-To use this web application you need to have apache with php5.3 and the php mongo module.
-Also the apache must have the mod_rewrite activated.
-
-To install the mongoWebAdmin web application you need to extract the contents of this archive to a directory
-that can be accessed  by apache and the directory must have AllowOverride All.
-
-Enjoy!
