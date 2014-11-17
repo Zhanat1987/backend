@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "21284637e5507ea5902f6c602305c06d",
+    "hash": "9f4d4bad414efb42b095684f7cf82965",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
-            "version": "3.3.0.x-dev",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "16dbdbd7a2c6cfa3be4e5dcc52249e577c02c84a"
+                "reference": "9a7e365c2c4360335d25246dac11afb1f577210a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/16dbdbd7a2c6cfa3be4e5dcc52249e577c02c84a",
-                "reference": "16dbdbd7a2c6cfa3be4e5dcc52249e577c02c84a",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/9a7e365c2c4360335d25246dac11afb1f577210a",
+                "reference": "9a7e365c2c4360335d25246dac11afb1f577210a",
                 "shasum": ""
             },
             "require": {
@@ -204,7 +204,8 @@
                     ".travis.yml",
                     "test/"
                 ]
-            }
+            },
+            "time": "2014-10-10 13:44:50"
         },
         {
             "name": "cebe/markdown",
@@ -364,17 +365,71 @@
             "time": "2014-10-30 13:41:35"
         },
         {
+            "name": "videlalvaro/php-amqplib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/videlalvaro/php-amqplib.git",
+                "reference": "82ece62a68d8a82214c49c415ddc9df770c25ce9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/82ece62a68d8a82214c49c415ddc9df770c25ce9",
+                "reference": "82ece62a68d8a82214c49c415ddc9df770c25ce9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "ext-sockets": "Use AMQPSocketConnection"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PhpAmqpLib": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Alvaro Videla"
+                }
+            ],
+            "description": "This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
+            "homepage": "https://github.com/videlalvaro/php-amqplib/",
+            "keywords": [
+                "message",
+                "queue",
+                "rabbitmq"
+            ],
+            "time": "2014-11-12 14:57:21"
+        },
+        {
             "name": "yiisoft/yii2",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "36ae6c7c32420ef7ddd551497e08a8f0cf31c67c"
+                "reference": "66e1a314106196f23baf4c0df8e18894a14e541c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/36ae6c7c32420ef7ddd551497e08a8f0cf31c67c",
-                "reference": "36ae6c7c32420ef7ddd551497e08a8f0cf31c67c",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/66e1a314106196f23baf4c0df8e18894a14e541c",
+                "reference": "66e1a314106196f23baf4c0df8e18894a14e541c",
                 "shasum": ""
             },
             "require": {
@@ -449,7 +504,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-11-12 11:06:39"
+            "time": "2014-11-17 04:16:37"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -457,12 +512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "65130c9a7e56d54350470eb70c820d30082c708c"
+                "reference": "87b6374376087b03b1556821c770ec6fbe246b31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/65130c9a7e56d54350470eb70c820d30082c708c",
-                "reference": "65130c9a7e56d54350470eb70c820d30082c708c",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/87b6374376087b03b1556821c770ec6fbe246b31",
+                "reference": "87b6374376087b03b1556821c770ec6fbe246b31",
                 "shasum": ""
             },
             "require": {
@@ -495,7 +550,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2014-11-07 22:41:01"
+            "time": "2014-11-16 17:57:10"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -677,12 +732,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "bd8e63631145016cfdf26e658b4a8a2a393698c2"
+                "reference": "44eae4deeb065454e68b3c9911181285f01003c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/bd8e63631145016cfdf26e658b4a8a2a393698c2",
-                "reference": "bd8e63631145016cfdf26e658b4a8a2a393698c2",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/44eae4deeb065454e68b3c9911181285f01003c6",
+                "reference": "44eae4deeb065454e68b3c9911181285f01003c6",
                 "shasum": ""
             },
             "require": {
@@ -718,7 +773,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2014-11-10 16:46:22"
+            "time": "2014-11-12 17:27:49"
         },
         {
             "name": "phpspec/php-diff",
@@ -945,7 +1000,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "videlalvaro/php-amqplib": 20
+    },
     "prefer-stable": false,
     "platform": {
         "php": ">=5.4.0"
