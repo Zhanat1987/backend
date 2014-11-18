@@ -12,6 +12,8 @@ class m141112_203447_create_table_user extends Migration
             'id' => Schema::TYPE_PK,
             'phoneNumber' => Schema::TYPE_STRING . '(20) NOT NULL',
             'phoneUUID' => Schema::TYPE_STRING . '(20) NOT NULL',
+            'latitude' => Schema::TYPE_FLOAT . '(3,6)',
+            'longitude' => Schema::TYPE_FLOAT . '(3,6)',
             'enable' => Schema::TYPE_SMALLINT . '(1) NOT NULL DEFAULT 1',
         ], $this->getTableOptions());
         $this->createIndex('phoneNumberAndUUIDUnique', '{{%user}}', ['phoneNumber', 'phoneUUID'], true);

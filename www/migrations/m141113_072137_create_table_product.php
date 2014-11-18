@@ -10,11 +10,12 @@ class m141113_072137_create_table_product extends Migration
     {
         $this->createTable('{{%product}}', [
             'id' => Schema::TYPE_PK,
-            'name' => Schema::TYPE_STRING . '(255) NOT NULL',
             'typeId' => Schema::TYPE_INTEGER . '(11) NOT NULL',
-            'image' => Schema::TYPE_STRING . '(255) NOT NULL',
-            'description' => Schema::TYPE_STRING . '(255) NOT NULL',
             'manufacturerId' => Schema::TYPE_INTEGER . '(11) NOT NULL',
+            'name' => Schema::TYPE_STRING . '(255) NOT NULL',
+            'description' => Schema::TYPE_STRING . '(255) NOT NULL',
+            'devName' => Schema::TYPE_STRING . '(255)',
+            'barcode' => Schema::TYPE_STRING . '(255)',
             'enable' => Schema::TYPE_SMALLINT . '(1) NOT NULL DEFAULT 1',
         ], $this->getTableOptions());
         $this->addForeignKey('typeIdProductFk', '{{%product}}', 'typeId', '{{%type}}', 'id');

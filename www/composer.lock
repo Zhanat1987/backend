@@ -424,12 +424,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "66e1a314106196f23baf4c0df8e18894a14e541c"
+                "reference": "90a57d793aacb8bac2cab0fee200af45eb9d63b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/66e1a314106196f23baf4c0df8e18894a14e541c",
-                "reference": "66e1a314106196f23baf4c0df8e18894a14e541c",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/90a57d793aacb8bac2cab0fee200af45eb9d63b3",
+                "reference": "90a57d793aacb8bac2cab0fee200af45eb9d63b3",
                 "shasum": ""
             },
             "require": {
@@ -504,7 +504,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-11-17 04:16:37"
+            "time": "2014-11-17 16:51:57"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -605,12 +605,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-mongodb.git",
-                "reference": "8db94974ac0952bbecad4906e95e13a45e4170a2"
+                "reference": "627794373702eb97b4c340b60eff59f098ca83ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-mongodb/zipball/8db94974ac0952bbecad4906e95e13a45e4170a2",
-                "reference": "8db94974ac0952bbecad4906e95e13a45e4170a2",
+                "url": "https://api.github.com/repos/yiisoft/yii2-mongodb/zipball/627794373702eb97b4c340b60eff59f098ca83ac",
+                "reference": "627794373702eb97b4c340b60eff59f098ca83ac",
                 "shasum": ""
             },
             "require": {
@@ -645,7 +645,7 @@
                 "mongodb",
                 "yii2"
             ],
-            "time": "2014-11-08 12:14:14"
+            "time": "2014-11-17 15:53:48"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
