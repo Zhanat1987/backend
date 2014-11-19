@@ -12,6 +12,7 @@ use Yii;
  * @property string $description
  * @property double $latitude
  * @property double $longitude
+ * @property integer $radius
  * @property integer $fakeDistributor
  * @property integer $enable
  *
@@ -35,9 +36,11 @@ class Cluster extends \yii\db\ActiveRecord
     {
         return [
             [['clusterTypeId', 'description', 'latitude', 'longitude'], 'required'],
-            [['clusterTypeId', 'fakeDistributor', 'enable'], 'integer'],
+            [['clusterTypeId', 'fakeDistributor', 'enable', 'radius'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['description'], 'string', 'max' => 255]
+            [['description'], 'string', 'max' => 255],
+            [['fakeDistributor'], 'default', 'value' => 0],
+            [['enable'], 'default', 'value' => 1],
         ];
     }
 
@@ -52,6 +55,7 @@ class Cluster extends \yii\db\ActiveRecord
             'description' => 'Description',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
+            'radius' => 'Radius',
             'fakeDistributor' => 'Fake Distributor',
             'enable' => 'Enable',
         ];
@@ -72,4 +76,5 @@ class Cluster extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Scan::className(), ['clusterId' => 'id']);
     }
+
 }

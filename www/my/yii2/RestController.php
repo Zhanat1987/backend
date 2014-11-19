@@ -20,11 +20,10 @@ class RestController extends Controller
         $behaviors['verbs'] = [
             'class' => VerbFilter::className(),
             'actions' => [
-                'index' => ['get', 'post', 'put', 'delete'],
-//                'sign-up' => ['post'],
-//                'login' => ['post'],
-//                'index' => ['get'],
-//                'view' => ['get'],
+//                'index' => ['get', 'post', 'put', 'delete'],
+                'scan' => ['post'],
+                'static-info' => ['get'],
+                'dynamic-info' => ['get'],
 //                'create' => ['post'],
 //                'update' => ['put', 'post'],
 //                'delete' => ['post', 'delete'],

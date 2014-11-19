@@ -14,6 +14,7 @@ class m141118_093135_create_table_cluster extends Migration
             'description' => Schema::TYPE_STRING . '(255) NOT NULL',
             'latitude' => Schema::TYPE_FLOAT . '(3,6) NOT NULL',
             'longitude' => Schema::TYPE_FLOAT . '(3,6) NOT NULL',
+            'radius' => Schema::TYPE_SMALLINT . '(5)',
             'fakeDistributor' => Schema::TYPE_SMALLINT . '(1)',
             'enable' => Schema::TYPE_SMALLINT . '(1)',
         ], $this->getTableOptions());

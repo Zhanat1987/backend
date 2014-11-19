@@ -19,6 +19,11 @@ use Yii;
  */
 class Status extends \yii\db\ActiveRecord
 {
+
+    const AUTHENTIC = 1;
+    const UNCERTAIN = 2;
+    const FAKE = 3;
+
     /**
      * @inheritdoc
      */
@@ -78,4 +83,5 @@ class Status extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ItemSpecialStatus::className(), ['statusId' => 'id']);
     }
+
 }

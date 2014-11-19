@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "item".
@@ -35,11 +36,12 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'statusId', 'productId'], 'required'],
-            [['number', 'statusId', 'productId'], 'integer'],
+            [['code', 'statusId'], 'required'],
+            [['number', 'statusId'], 'integer'],
             [['code'], 'string', 'max' => 255],
             [['code'], 'unique'],
-            [['number'], 'unique']
+            [['number'], 'unique'],
+            [['productId'], 'default', 'value' => null],
         ];
     }
 
@@ -96,4 +98,23 @@ class Item extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Scan::className(), ['itemId' => 'id']);
     }
+
+    public static function getIdByCodeOrNumber($codeNumber, $type)
+    {
+        if ($type == 1) {
+            $condition = 'code = :code';
+            $params = [':code' => $codeNumber];
+        } else if ($type == 2) {
+            $condition = 'number = ":number"';
+            $params = [':number' => $codeNumber];
+        } else {
+            return;
+        }
+        return (new Query)
+            ->select('id')
+            ->from(self::tableName())
+            ->where($condition, $params)
+            ->scalar();
+    }
+
 }

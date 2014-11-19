@@ -44,7 +44,7 @@ class m141118_095212_insert_test_values extends Migration
             $statusRows[] = [
                 StringHelper::truncate($faker->sentence(), 255),
                 $faker->word,
-                $faker->hexcolor,
+                ltrim($faker->hexcolor, '#'),
             ];
         }
         $this->batchInsert('{{%status}}', ['description', 'icon', 'colour'], $statusRows);

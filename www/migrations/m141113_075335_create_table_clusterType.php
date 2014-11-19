@@ -10,7 +10,7 @@ class m141113_075335_create_table_clusterType extends Migration
     {
         $this->createTable('{{%clusterType}}', [
             'id' => Schema::TYPE_PK,
-            'description' => Schema::TYPE_STRING . '(255) NOT NULL',
+            'description' => Schema::TYPE_STRING . '(255)',
             'type' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'enable' => Schema::TYPE_SMALLINT . '(1)',
         ], $this->getTableOptions());

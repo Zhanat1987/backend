@@ -30,7 +30,7 @@ class ClusterType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'type'], 'required'],
+            [['type'], 'required'],
             [['type', 'enable'], 'integer'],
             [['description'], 'string', 'max' => 255]
         ];

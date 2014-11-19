@@ -13,7 +13,7 @@ class m141113_075327_create_table_item extends Migration
             'code' => Schema::TYPE_STRING . '(255) NOT NULL',
             'number' => Schema::TYPE_INTEGER . '(9)',
             'statusId' => Schema::TYPE_INTEGER . '(11) NOT NULL',
-            'productId' => Schema::TYPE_INTEGER . '(11) NOT NULL',
+            'productId' => Schema::TYPE_INTEGER . '(11)',
         ], $this->getTableOptions());
         $this->createIndex('codeUnique', '{{%item}}', 'code', true);
         $this->createIndex('numberUnique', '{{%item}}', 'number', true);

@@ -37,10 +37,11 @@ class Scan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['itemId', 'userId', 'clusterId', 'latitude', 'longitude', 'time', 'addressName'], 'required'],
-            [['itemId', 'userId', 'clusterId', 'time', 'threshold'], 'integer'],
+            [['itemId', 'userId', 'latitude', 'longitude', 'time', 'addressName'], 'required'],
+            [['itemId', 'userId', 'time', 'threshold'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['addressName'], 'string', 'max' => 255]
+            [['addressName'], 'string', 'max' => 255],
+            [['clusterId'], 'default', 'value' => null],
         ];
     }
 

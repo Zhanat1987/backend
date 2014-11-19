@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "user".
@@ -36,8 +37,14 @@ class User extends \yii\db\ActiveRecord
             [['phoneNumber', 'phoneUUID'], 'required'],
             [['latitude', 'longitude'], 'number'],
             [['enable'], 'integer'],
+            [['enable'], 'default', 'value' => 1],
             [['phoneNumber', 'phoneUUID'], 'string', 'max' => 20],
-            [['phoneNumber', 'phoneUUID'], 'unique', 'targetAttribute' => ['phoneNumber', 'phoneUUID'], 'message' => 'The combination of Phone Number and Phone Uuid has already been taken.']
+            [
+                ['phoneNumber', 'phoneUUID'],
+                'unique',
+                'targetAttribute' => ['phoneNumber', 'phoneUUID'],
+                'message' => 'The combination of Phone Number and Phone Uuid has already been taken.'
+            ]
         ];
     }
 
@@ -71,4 +78,15 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Scan::className(), ['userId' => 'id']);
     }
+
+    public static function getIdByNumberAndUUID($number, $uuid)
+    {
+        return (new Query)
+            ->select('id')
+            ->from(self::tableName())
+            ->where('phoneNumber = :phoneNumber AND phoneUUID = :phoneUUID',
+                [':phoneNumber' => $number, ':phoneUUID' => $uuid])
+            ->scalar();
+    }
+
 }
