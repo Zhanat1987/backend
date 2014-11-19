@@ -8,16 +8,18 @@ use Yii;
  * This is the model class for table "product".
  *
  * @property integer $id
- * @property string $name
  * @property integer $typeId
- * @property string $image
- * @property string $description
  * @property integer $manufacturerId
+ * @property string $name
+ * @property string $description
+ * @property string $devName
+ * @property string $barcode
  * @property integer $enable
  *
  * @property Item[] $items
  * @property Manufacturer $manufacturer
  * @property Type $type
+ * @property ProductImage[] $productImages
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -35,9 +37,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'typeId', 'image', 'description', 'manufacturerId'], 'required'],
+            [['typeId', 'manufacturerId', 'name', 'description'], 'required'],
             [['typeId', 'manufacturerId', 'enable'], 'integer'],
-            [['name', 'image', 'description'], 'string', 'max' => 255]
+            [['name', 'description', 'devName', 'barcode'], 'string', 'max' => 255]
         ];
     }
 
@@ -48,11 +50,12 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
             'typeId' => 'Type ID',
-            'image' => 'Image',
-            'description' => 'Description',
             'manufacturerId' => 'Manufacturer ID',
+            'name' => 'Name',
+            'description' => 'Description',
+            'devName' => 'Dev Name',
+            'barcode' => 'Barcode',
             'enable' => 'Enable',
         ];
     }
@@ -79,5 +82,13 @@ class Product extends \yii\db\ActiveRecord
     public function getType()
     {
         return $this->hasOne(Type::className(), ['id' => 'typeId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductImages()
+    {
+        return $this->hasMany(ProductImage::className(), ['productId' => 'id']);
     }
 }

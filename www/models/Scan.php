@@ -9,13 +9,15 @@ use Yii;
  *
  * @property integer $id
  * @property integer $itemId
+ * @property integer $userId
+ * @property integer $clusterId
  * @property double $latitude
  * @property double $longitude
  * @property integer $time
- * @property integer $userId
  * @property integer $threshold
- * @property string $name
+ * @property string $addressName
  *
+ * @property Cluster $cluster
  * @property Item $item
  * @property User $user
  */
@@ -35,10 +37,10 @@ class Scan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['itemId', 'latitude', 'longitude', 'time', 'userId', 'name'], 'required'],
-            [['itemId', 'time', 'userId', 'threshold'], 'integer'],
+            [['itemId', 'userId', 'clusterId', 'latitude', 'longitude', 'time', 'addressName'], 'required'],
+            [['itemId', 'userId', 'clusterId', 'time', 'threshold'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['name'], 'string', 'max' => 255]
+            [['addressName'], 'string', 'max' => 255]
         ];
     }
 
@@ -50,13 +52,22 @@ class Scan extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'itemId' => 'Item ID',
+            'userId' => 'User ID',
+            'clusterId' => 'Cluster ID',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
             'time' => 'Time',
-            'userId' => 'User ID',
             'threshold' => 'Threshold',
-            'name' => 'Name',
+            'addressName' => 'Address Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCluster()
+    {
+        return $this->hasOne(Cluster::className(), ['id' => 'clusterId']);
     }
 
     /**

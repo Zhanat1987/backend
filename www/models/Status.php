@@ -14,6 +14,8 @@ use Yii;
  * @property integer $enable
  *
  * @property Item[] $items
+ * @property ItemCompletion[] $itemCompletions
+ * @property ItemSpecialStatus[] $itemSpecialStatuses
  */
 class Status extends \yii\db\ActiveRecord
 {
@@ -59,5 +61,21 @@ class Status extends \yii\db\ActiveRecord
     public function getItems()
     {
         return $this->hasMany(Item::className(), ['statusId' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemCompletions()
+    {
+        return $this->hasMany(ItemCompletion::className(), ['statusId' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemSpecialStatuses()
+    {
+        return $this->hasMany(ItemSpecialStatus::className(), ['statusId' => 'id']);
     }
 }

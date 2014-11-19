@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string $devName
  * @property string $brandLogo
  * @property integer $enable
  *
@@ -32,7 +33,7 @@ class Manufacturer extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['enable'], 'integer'],
-            [['name', 'brandLogo'], 'string', 'max' => 255]
+            [['name', 'devName', 'brandLogo'], 'string', 'max' => 255]
         ];
     }
 
@@ -44,6 +45,7 @@ class Manufacturer extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'devName' => 'Dev Name',
             'brandLogo' => 'Brand Logo',
             'enable' => 'Enable',
         ];
