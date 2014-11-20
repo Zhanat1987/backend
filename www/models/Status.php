@@ -21,8 +21,8 @@ class Status extends \yii\db\ActiveRecord
 {
 
     const AUTHENTIC = 1;
-    const UNCERTAIN = 2;
-    const FAKE = 3;
+    const FAKE = 2;
+    const UNCERTAIN = 3;
 
     /**
      * @inheritdoc

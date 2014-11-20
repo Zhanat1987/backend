@@ -23,6 +23,7 @@ use Yii;
  */
 class Scan extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -86,4 +87,5 @@ class Scan extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'userId']);
     }
+
 }

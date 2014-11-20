@@ -20,6 +20,7 @@ class EventScan
     public static function execute($params)
     {
         $transaction = Yii::$app->db->beginTransaction();
+        $static = new static();
         try {
             $userId = User::getIdByNumberAndUUID($params['phoneNumber'], $params['uuid']);
             if (!$userId) {
@@ -29,14 +30,7 @@ class EventScan
                 if ($user->save()) {
                     $userId = $user->id;
                 } else {
-                    return ArrayHelper::merge(
-                        Yii::$app->params['response']['error'],
-                        [
-                            'errors' => [
-                                'user' => $user->getErrors(),
-                            ],
-                        ]
-                    );
+                    return $static->getResponseWithModelErrors('user', $user->getErrors());
                 }
             }
             $itemId = Item::getIdByCodeOrNumber($params['codeNumber'], $params['codeNumberType']);
@@ -51,14 +45,7 @@ class EventScan
                 if ($item->save()) {
                     $itemId = $item->id;
                 } else {
-                    return ArrayHelper::merge(
-                        Yii::$app->params['response']['error'],
-                        [
-                            'errors' => [
-                                'item' => $item->getErrors(),
-                            ],
-                        ]
-                    );
+                    return $static->getResponseWithModelErrors('item', $item->getErrors());
                 }
             }
             $scan = new Scan;
@@ -68,17 +55,9 @@ class EventScan
             $scan->threshold = $params['threshold'];
             $scan->userId = $userId;
             $scan->itemId = $itemId;
-            $static = new static();
             $scan->addressName = $static->getAddressName($params['latitude'], $params['longitude']);
             if (!$scan->save()) {
-                return ArrayHelper::merge(
-                    Yii::$app->params['response']['error'],
-                    [
-                        'errors' => [
-                            'scan' => $scan->getErrors(),
-                        ],
-                    ]
-                );
+                return $static->getResponseWithModelErrors('scan', $scan->getErrors());
             }
             $transaction->commit();
         } catch (DbException $e) {
@@ -92,31 +71,35 @@ class EventScan
         return Yii::$app->params['response']['success'];
     }
 
+    private function getResponseWithModelErrors($key, $errors)
+    {
+        return ArrayHelper::merge(
+            Yii::$app->params['response']['error'],
+            [
+                'errors' => [
+                    $key => $errors,
+                ],
+            ]
+        );
+    }
+
     public function getAddressName($latitude, $longitude)
     {
         try {
             $this->_addressName = $this->getAddressNameFromYandex($latitude, $longitude);
-        } catch (Exception $e) {
-
-        }
-        if ($this->_addressName) {
-            return $this->_addressName;
-        }
-        try {
+            if ($this->_addressName) {
+                return $this->_addressName;
+            }
             $this->_addressName = $this->getAddressNameFromWikimapia($latitude, $longitude);
-        } catch (Exception $e) {
-
-        }
-        if ($this->_addressName) {
-            return $this->_addressName;
-        }
-        try {
+            if ($this->_addressName) {
+                return $this->_addressName;
+            }
             $this->_addressName = $this->getAddressNameFromGoogle($latitude, $longitude);
+            if ($this->_addressName) {
+                return $this->_addressName;
+            }
         } catch (Exception $e) {
 
-        }
-        if ($this->_addressName) {
-            return $this->_addressName;
         }
         return 'не определено';
     }
