@@ -2,6 +2,7 @@
 
 namespace app\services;
 
+use Yii;
 use app\models\Status;
 use app\models\Scan;
 use app\models\Item;
@@ -49,10 +50,7 @@ class EventDynamicInfo
             ->where($condition, [':codeNumber' => $codeNumber])
             ->all();
         if (!$rows) {
-            return [
-                'code' => 200,
-                'status' => 'empty',
-            ];
+            return Yii::$app->params['response']['empty'];
         }
         $scans = [];
         foreach ($rows as $row) {

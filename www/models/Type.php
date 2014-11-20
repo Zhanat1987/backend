@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\services\EventStaticInfo;
 
 /**
  * This is the model class for table "type".
@@ -16,6 +17,7 @@ use Yii;
  */
 class Type extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -62,6 +64,16 @@ class Type extends \yii\db\ActiveRecord
     public function getOptionalParameters()
     {
         return $this->hasOne(OptionalParameters::className(), ['typeId' => 'id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            EventStaticInfo::deleteCacheThroughRelations($this->id, 'typeId');
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

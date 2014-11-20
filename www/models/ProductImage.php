@@ -17,6 +17,7 @@ use Yii;
  */
 class ProductImage extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -58,4 +59,15 @@ class ProductImage extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Product::className(), ['id' => 'productId']);
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            (new Product())->deleteCacheFromEventStaticInfo($this->productId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

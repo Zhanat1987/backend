@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\services\EventStaticInfo;
 use Yii;
 use yii\db\Query;
 
@@ -97,6 +98,16 @@ class Item extends \yii\db\ActiveRecord
     public function getScans()
     {
         return $this->hasMany(Scan::className(), ['itemId' => 'id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            EventStaticInfo::deleteCache($this->code, $this->number);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function getIdByCodeOrNumber($codeNumber, $type)

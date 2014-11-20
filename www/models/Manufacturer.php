@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\services\EventStaticInfo;
 
 /**
  * This is the model class for table "manufacturer".
@@ -17,6 +18,7 @@ use Yii;
  */
 class Manufacturer extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -58,4 +60,15 @@ class Manufacturer extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Product::className(), ['manufacturerId' => 'id']);
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            EventStaticInfo::deleteCacheThroughRelations($this->id, 'manufacturerId');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
+use app\services\EventStaticInfo;
 
 /**
  * This is the model class for table "product".
@@ -23,6 +25,7 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -91,4 +94,29 @@ class Product extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ProductImage::className(), ['productId' => 'id']);
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            self::deleteCacheFromEventStaticInfo($this->id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function deleteCacheFromEventStaticInfo($ids)
+    {
+        $rows = (new Query)->select('code, number')
+            ->from(Item::tableName())
+            ->where('productId IN (' . $ids . ')')
+            ->all();
+        if ($rows) {
+            foreach ($rows as $row) {
+                EventStaticInfo::deleteCache($row['code'], $row['number']);
+            }
+
+        }
+    }
+
 }

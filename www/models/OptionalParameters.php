@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\mongodb\ActiveRecord;
+use yii\mongodb\Query;
+use app\services\EventStaticInfo;
 
 /**
  * This is the model class for table "type".
@@ -16,6 +18,7 @@ use yii\mongodb\ActiveRecord;
  */
 class OptionalParameters extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -58,6 +61,23 @@ class OptionalParameters extends ActiveRecord
     public function getType()
     {
         return $this->hasOne(Type::className(), ['id' => 'typeId']);
+    }
+
+    public static function getOptionalParametersByTypeId($typeId)
+    {
+        return (new Query)->select('optionalParameters')
+            ->from(self::collectionName())
+            ->where('typeId = ' . $typeId);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            EventStaticInfo::deleteCacheThroughRelations($this->typeId, 'typeId');
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
