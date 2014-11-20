@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "itemSpecialStatus".
@@ -16,7 +17,7 @@ use Yii;
  * @property Status $status
  * @property User $user
  */
-class ItemSpecialStatus extends \yii\db\ActiveRecord
+class ItemSpecialStatus extends ActiveRecord
 {
     /**
      * @inheritdoc

@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\services\EventStaticInfo;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "manufacturer".
@@ -16,7 +17,7 @@ use app\services\EventStaticInfo;
  *
  * @property Product[] $products
  */
-class Manufacturer extends \yii\db\ActiveRecord
+class Manufacturer extends ActiveRecord
 {
 
     /**

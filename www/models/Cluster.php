@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "cluster".
@@ -19,7 +20,7 @@ use Yii;
  * @property ClusterType $clusterType
  * @property Scan[] $scans
  */
-class Cluster extends \yii\db\ActiveRecord
+class Cluster extends ActiveRecord
 {
     /**
      * @inheritdoc

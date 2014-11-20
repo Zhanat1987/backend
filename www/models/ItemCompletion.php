@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "itemCompletion".
@@ -16,7 +17,7 @@ use Yii;
  * @property Item $item
  * @property Status $status
  */
-class ItemCompletion extends \yii\db\ActiveRecord
+class ItemCompletion extends ActiveRecord
 {
     /**
      * @inheritdoc

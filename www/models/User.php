@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\Query;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "user".
@@ -18,8 +19,9 @@ use yii\db\Query;
  * @property ItemSpecialStatus[] $itemSpecialStatuses
  * @property Scan[] $scans
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */

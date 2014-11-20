@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "productImage".
@@ -15,7 +16,7 @@ use Yii;
  *
  * @property Product $product
  */
-class ProductImage extends \yii\db\ActiveRecord
+class ProductImage extends ActiveRecord
 {
 
     /**

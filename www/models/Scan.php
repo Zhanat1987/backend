@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "scan".
@@ -21,7 +22,7 @@ use Yii;
  * @property Item $item
  * @property User $user
  */
-class Scan extends \yii\db\ActiveRecord
+class Scan extends ActiveRecord
 {
 
     /**

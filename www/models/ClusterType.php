@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "clusterType".
@@ -14,8 +15,9 @@ use Yii;
  *
  * @property Cluster[] $clusters
  */
-class ClusterType extends \yii\db\ActiveRecord
+class ClusterType extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */

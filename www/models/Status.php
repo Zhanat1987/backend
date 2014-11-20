@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "status".
@@ -17,7 +18,7 @@ use Yii;
  * @property ItemCompletion[] $itemCompletions
  * @property ItemSpecialStatus[] $itemSpecialStatuses
  */
-class Status extends \yii\db\ActiveRecord
+class Status extends ActiveRecord
 {
 
     const AUTHENTIC = 1;

@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use yii\mongodb\ActiveRecord;
+use my\yii2\MongoActiveRecord;
 use yii\mongodb\Query;
 use app\services\EventStaticInfo;
 
@@ -16,7 +16,7 @@ use app\services\EventStaticInfo;
  *
  * @property Type $type
  */
-class OptionalParameters extends ActiveRecord
+class OptionalParameters extends MongoActiveRecord
 {
 
     /**

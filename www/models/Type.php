@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\services\EventStaticInfo;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "type".
@@ -15,7 +16,7 @@ use app\services\EventStaticInfo;
  * @property Product[] $products
  * @property OptionalParameters $optionalParameters
  */
-class Type extends \yii\db\ActiveRecord
+class Type extends ActiveRecord
 {
 
     /**
