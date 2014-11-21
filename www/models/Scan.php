@@ -40,10 +40,9 @@ class Scan extends ActiveRecord
     {
         return [
             [['itemId', 'userId', 'latitude', 'longitude', 'time', 'addressName'], 'required'],
-            [['itemId', 'userId', 'time', 'threshold'], 'integer'],
+            [['itemId', 'userId', 'time', 'threshold', 'clusterId'], 'integer'],
             [['latitude', 'longitude'], 'number'],
             [['addressName'], 'string', 'max' => 255],
-            [['clusterId'], 'default', 'value' => null],
         ];
     }
 

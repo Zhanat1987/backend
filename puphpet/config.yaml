@@ -15,7 +15,7 @@ vagrantfile-local:
                     guest: '22'
                 nginx:
                     host: '8080'
-                    guest: '80'
+                    guest: '443'
                 mongoWeb:
                     host: '28017'
                     guest: '28017'
