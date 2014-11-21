@@ -6,7 +6,7 @@ return [
         'success' => [
             'code' => 200,
             'status' => 'ok',
-            'message' => 'ВсЁ ништяк!!!',
+            'message' => 'Всё ништяк!!!',
         ],
         'error' => [
             'code' => 400,

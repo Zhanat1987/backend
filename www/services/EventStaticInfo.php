@@ -23,11 +23,7 @@ class EventStaticInfo
             $productImageTable = ProductImage::tableName();
             $manufacturerTable = Manufacturer::tableName();
             $typeTable = Type::tableName();
-            if ($codeNumberType == 1) {
-                $condition = $itemTable . '.code = :codeNumber';
-            } else if ($codeNumberType == 2) {
-                $condition = $itemTable . '.number = :codeNumber';
-            }
+            $condition = $itemTable . ($codeNumberType == 1 ? '.code = :codeNumber' : '.number = :codeNumber');
             $fields = [
                 $itemTable . '.code',
                 $itemTable . '.number',
@@ -43,6 +39,10 @@ class EventStaticInfo
                 $typeTable . '.description AS typeDescription',
                 $typeTable . '.id AS typeId',
             ];
+            /*
+             * собрать через with (relations) - будет больше запросов,
+             * поэтому делаем все одним запросом с join'ами
+             */
             $result = Item::find()
                 ->select($fields)
                 ->from($itemTable)

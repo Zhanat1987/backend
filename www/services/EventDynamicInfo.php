@@ -18,11 +18,7 @@ class EventDynamicInfo
         $statusTable = Status::tableName();
         $scanTable = Scan::tableName();
         $userTable = User::tableName();
-        if ($codeNumberType == 1) {
-            $condition = $itemTable . '.code = :codeNumber';
-        } else if ($codeNumberType == 2) {
-            $condition = $itemTable . '.number = :codeNumber';
-        }
+        $condition = $itemTable . ($codeNumberType == 1 ? '.code = :codeNumber' : '.number = :codeNumber');
         $fields = [
             $itemTable . '.code',
             $itemTable . '.statusId',
@@ -40,6 +36,10 @@ class EventDynamicInfo
             $userTable . '.phoneUUID',
             $userTable . '.id',
         ];
+        /*
+         * собрать через with (relations) - будет больше запросов,
+         * поэтому делаем все одним запросом с join'ами
+         */
         $rows = Item::find()
             ->select($fields)
             ->from($itemTable)
