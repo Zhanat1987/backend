@@ -5,9 +5,9 @@ namespace app\controllers;
 use Yii;
 use my\yii2\RestController;
 use yii\base\InvalidParamException;
-use app\services\EventScan;
-use app\services\EventDynamicInfo;
-use app\services\EventStaticInfo;
+use app\services\event\Scan;
+use app\services\event\DynamicInfo;
+use app\services\event\StaticInfo;
 
 class EventController extends RestController
 {
@@ -18,19 +18,19 @@ class EventController extends RestController
             $this->getParams('time') && $this->getParams('threshold') &&
             $this->getParams('uuid') && $this->getParams('phoneNumber') &&
             $this->getParams('codeNumber') && $this->getParams('codeNumberType')) {
-            return EventScan::execute($this->getParams());
+            return Scan::execute($this->getParams());
         }
         throw new InvalidParamException('Переданы не все обязательные параметры', 400);
     }
 
     public function actionStaticInfo()
     {
-        return EventStaticInfo::execute($this->getParams('codeNumber'), $this->getParams('codeNumberType'));
+        return StaticInfo::execute($this->getParams('codeNumber'), $this->getParams('codeNumberType'));
     }
 
     public function actionDynamicInfo()
     {
-        return EventDynamicInfo::execute($this->getParams('codeNumber'), $this->getParams('codeNumberType'));
+        return DynamicInfo::execute($this->getParams('codeNumber'), $this->getParams('codeNumberType'));
     }
 
 } 

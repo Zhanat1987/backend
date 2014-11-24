@@ -1,8 +1,8 @@
 <?php
 
-namespace app\services;
+namespace app\services\event;
 
-use app\models\Scan;
+use app\models\Scan as ModelScan;
 use app\models\User;
 use app\models\Item;
 use app\models\Status;
@@ -11,8 +11,9 @@ use yii\db\Exception as DbException;
 use Exception;
 use Yandex\Geo\Api;
 use yii\helpers\ArrayHelper;
+use app\services\AddressName;
 
-class EventScan
+class Scan
 {
 
     private $_addressName;
@@ -48,14 +49,14 @@ class EventScan
                     return $static->getResponseWithModelErrors('item', $item->getErrors());
                 }
             }
-            $scan = new Scan;
+            $scan = new ModelScan;
             $scan->latitude = $params['latitude'];
             $scan->longitude = $params['longitude'];
             $scan->time = $params['time'];
             $scan->threshold = $params['threshold'];
             $scan->userId = $userId;
             $scan->itemId = $itemId;
-            $scan->addressName = $static->getAddressName($params['latitude'], $params['longitude']);
+            $scan->addressName = AddressName::execute($params['latitude'], $params['longitude']);
             if (!$scan->save()) {
                 return $static->getResponseWithModelErrors('scan', $scan->getErrors());
             }

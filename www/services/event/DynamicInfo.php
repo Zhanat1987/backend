@@ -1,6 +1,6 @@
 <?php
 
-namespace app\services;
+namespace app\services\event;
 
 use Yii;
 use app\models\Status;
@@ -9,7 +9,7 @@ use app\models\Item;
 use app\models\User;
 use yii\helpers\ArrayHelper;
 
-class EventDynamicInfo
+class DynamicInfo
 {
 
     public static function execute($codeNumber, $codeNumberType)

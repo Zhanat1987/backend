@@ -1,6 +1,6 @@
 <?php
 
-namespace app\services;
+namespace app\services\event;
 
 use Yii;
 use app\models\Item;
@@ -12,7 +12,7 @@ use app\models\OptionalParameters;
 use yii\helpers\ArrayHelper;
 use yii\db\Query;
 
-class EventStaticInfo
+class StaticInfo
 {
 
     public static function execute($codeNumber, $codeNumberType)
