@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1a35f60f3169433ffaf14e03646befff",
+    "hash": "3074be1bae7fc29653c7f9d7552df263",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -102,16 +102,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.1.38",
+            "version": "3.1.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "464cddbdea65411896468f40321e68abcc75a34c"
+                "reference": "ba392f1c9c1f7a05d1b89a5e49cbd0610face768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/464cddbdea65411896468f40321e68abcc75a34c",
-                "reference": "464cddbdea65411896468f40321e68abcc75a34c",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/ba392f1c9c1f7a05d1b89a5e49cbd0610face768",
+                "reference": "ba392f1c9c1f7a05d1b89a5e49cbd0610face768",
                 "shasum": ""
             },
             "require": {
@@ -318,12 +318,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc"
+                "reference": "e1f77dd0109e1137bcdeaccb9197c95d17624cab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc",
-                "reference": "d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/e1f77dd0109e1137bcdeaccb9197c95d17624cab",
+                "reference": "e1f77dd0109e1137bcdeaccb9197c95d17624cab",
                 "shasum": ""
             },
             "require": {
@@ -362,7 +362,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-10-30 13:41:35"
+            "time": "2014-11-30 16:14:17"
         },
         {
             "name": "videlalvaro/php-amqplib",
@@ -370,12 +370,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/videlalvaro/php-amqplib.git",
-                "reference": "e35836889a94c8707c369f6321927f661e67b388"
+                "reference": "4d57fde8c3eb5b4a9577cef15ab874150c7655cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/e35836889a94c8707c369f6321927f661e67b388",
-                "reference": "e35836889a94c8707c369f6321927f661e67b388",
+                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/4d57fde8c3eb5b4a9577cef15ab874150c7655cb",
+                "reference": "4d57fde8c3eb5b4a9577cef15ab874150c7655cb",
                 "shasum": ""
             },
             "require": {
@@ -416,7 +416,71 @@
                 "queue",
                 "rabbitmq"
             ],
-            "time": "2014-11-18 23:37:44"
+            "time": "2014-11-27 15:11:55"
+        },
+        {
+            "name": "willdurand/geocoder",
+            "version": "2.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/geocoder-php/Geocoder.git",
+                "reference": "48c5d047f6b679b4eae64337a1adc74095a2cda5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/geocoder-php/Geocoder/zipball/48c5d047f6b679b4eae64337a1adc74095a2cda5",
+                "reference": "48c5d047f6b679b4eae64337a1adc74095a2cda5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "geoip/geoip": "~1.13",
+                "geoip2/geoip2": "~0.6",
+                "guzzle/guzzle": "@stable",
+                "kriswallsmith/buzz": "@stable",
+                "zendframework/zend-http": "~2.1"
+            },
+            "suggest": {
+                "ext-curl": "Enabling the curl extension allows you to use the CurlHttpAdapter.",
+                "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",
+                "geoip/geoip": "If you are going to use the MaxMindBinaryProvider (conflict with geoip extension).",
+                "geoip2/geoip2": "If you are going to use the GeoIP2DatabaseProvider.",
+                "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
+                "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
+                "zendframework/zend-http": "Enabling Zend Http allows you to use the ZendHttpAdapter."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Geocoder": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com"
+                }
+            ],
+            "description": "The almost missing Geocoder PHP 5.3 library.",
+            "homepage": "http://geocoder-php.org",
+            "keywords": [
+                "abstraction",
+                "geocoder",
+                "geocoding",
+                "geoip"
+            ],
+            "time": "2014-10-03 08:08:28"
         },
         {
             "name": "yandex/geo",
@@ -469,12 +533,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "554bf532cceca6610212c5c97da17fb2c01a5621"
+                "reference": "7d915a65b12db5a5c15cfd9bbdf9432178f75e4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/554bf532cceca6610212c5c97da17fb2c01a5621",
-                "reference": "554bf532cceca6610212c5c97da17fb2c01a5621",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/7d915a65b12db5a5c15cfd9bbdf9432178f75e4a",
+                "reference": "7d915a65b12db5a5c15cfd9bbdf9432178f75e4a",
                 "shasum": ""
             },
             "require": {
@@ -549,7 +613,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-11-18 12:46:27"
+            "time": "2014-12-02 03:23:26"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -557,12 +621,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "87b6374376087b03b1556821c770ec6fbe246b31"
+                "reference": "14c09f022ddfd0ffe74d8668ad88eb967b8145d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/87b6374376087b03b1556821c770ec6fbe246b31",
-                "reference": "87b6374376087b03b1556821c770ec6fbe246b31",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/14c09f022ddfd0ffe74d8668ad88eb967b8145d5",
+                "reference": "14c09f022ddfd0ffe74d8668ad88eb967b8145d5",
                 "shasum": ""
             },
             "require": {
@@ -595,7 +659,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2014-11-16 17:57:10"
+            "time": "2014-12-02 18:33:48"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -693,6 +757,54 @@
             "time": "2014-11-17 15:53:48"
         },
         {
+            "name": "yiisoft/yii2-redis",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-redis.git",
+                "reference": "f1ce041ea7718e51835a01dd8df22092ed52eed8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-redis/zipball/f1ce041ea7718e51835a01dd8df22092ed52eed8",
+                "reference": "f1ce041ea7718e51835a01dd8df22092ed52eed8",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\redis\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
+                }
+            ],
+            "description": "Redis Cache, Session and ActiveRecord for the Yii framework",
+            "keywords": [
+                "active-record",
+                "cache",
+                "redis",
+                "session",
+                "yii2"
+            ],
+            "time": "2014-11-24 23:08:56"
+        },
+        {
             "name": "yiisoft/yii2-swiftmailer",
             "version": "dev-master",
             "source": {
@@ -777,12 +889,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "44eae4deeb065454e68b3c9911181285f01003c6"
+                "reference": "420851d62126509a5444fdd06f15f57ac05ab29a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/44eae4deeb065454e68b3c9911181285f01003c6",
-                "reference": "44eae4deeb065454e68b3c9911181285f01003c6",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/420851d62126509a5444fdd06f15f57ac05ab29a",
+                "reference": "420851d62126509a5444fdd06f15f57ac05ab29a",
                 "shasum": ""
             },
             "require": {
@@ -818,7 +930,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2014-11-12 17:27:49"
+            "time": "2014-11-30 16:08:55"
         },
         {
             "name": "phpspec/php-diff",
@@ -905,12 +1017,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "4b6b1a883dbe817c2ef50324dd78649b10ffc316"
+                "reference": "12fdba8357249729a1a2cf2e4676b309611eaa58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/4b6b1a883dbe817c2ef50324dd78649b10ffc316",
-                "reference": "4b6b1a883dbe817c2ef50324dd78649b10ffc316",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/12fdba8357249729a1a2cf2e4676b309611eaa58",
+                "reference": "12fdba8357249729a1a2cf2e4676b309611eaa58",
                 "shasum": ""
             },
             "require": {
@@ -944,7 +1056,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2014-11-04 23:33:17"
+            "time": "2014-11-20 09:28:05"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -952,12 +1064,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-faker.git",
-                "reference": "cb109dfae7c19d5e6e8266fbd5e1d4e1766fc2df"
+                "reference": "39bcc077a6592ed4a548946b2d33ab8f717b4a5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-faker/zipball/cb109dfae7c19d5e6e8266fbd5e1d4e1766fc2df",
-                "reference": "cb109dfae7c19d5e6e8266fbd5e1d4e1766fc2df",
+                "url": "https://api.github.com/repos/yiisoft/yii2-faker/zipball/39bcc077a6592ed4a548946b2d33ab8f717b4a5e",
+                "reference": "39bcc077a6592ed4a548946b2d33ab8f717b4a5e",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +1103,7 @@
                 "faker",
                 "yii2"
             ],
-            "time": "2014-10-25 13:28:36"
+            "time": "2014-11-27 21:32:38"
         },
         {
             "name": "yiisoft/yii2-gii",
@@ -1047,7 +1159,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "videlalvaro/php-amqplib": 20,
-        "yandex/geo": 20
+        "yandex/geo": 20,
+        "willdurand/geocoder": 0
     },
     "prefer-stable": false,
     "platform": {

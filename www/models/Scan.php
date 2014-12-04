@@ -16,11 +16,11 @@ use my\yii2\ActiveRecord;
  * @property double $longitude
  * @property integer $time
  * @property integer $threshold
- * @property string $addressName
  *
  * @property Cluster $cluster
  * @property Item $item
  * @property User $user
+ * @property AddressInfo $addressInfo
  */
 class Scan extends ActiveRecord
 {
@@ -39,10 +39,9 @@ class Scan extends ActiveRecord
     public function rules()
     {
         return [
-            [['itemId', 'userId', 'latitude', 'longitude', 'time', 'addressName'], 'required'],
+            [['itemId', 'userId', 'latitude', 'longitude', 'time'], 'required'],
             [['itemId', 'userId', 'time', 'threshold', 'clusterId'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['addressName'], 'string', 'max' => 255],
         ];
     }
 
@@ -60,7 +59,6 @@ class Scan extends ActiveRecord
             'longitude' => 'Longitude',
             'time' => 'Time',
             'threshold' => 'Threshold',
-            'addressName' => 'Address Name',
         ];
     }
 
@@ -86,6 +84,14 @@ class Scan extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'userId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAddressInfo()
+    {
+        return $this->hasOne(AddressInfo::className(), ['scanId' => 'id']);
     }
 
 }

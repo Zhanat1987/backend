@@ -3,9 +3,10 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'wipon api',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'en',
     'timezone' => 'Asia/Almaty',
     'components' => [
         'cache' => [
@@ -56,6 +57,22 @@ $config = [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['appErrors'],
+                    'logFile' => '@app/runtime/logs/appErrors.log',
+                    'maxFileSize' => 1024 * 2,
+                    'maxLogFiles' => 20,
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['disableUser'],
+                    'logFile' => '@app/runtime/logs/disableUser.log',
+                    'maxFileSize' => 1024 * 2,
+                    'maxLogFiles' => 20,
+                ],
             ],
         ],
         'errorHandler' => [
@@ -66,13 +83,13 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
-                'event/test/<number>' => 'event/test/number/<number>',
-                'event/test/<code>' => 'event/test/code/<code>',
-                '<controller:[a-zA-Z0-9-]+>/<action:[a-zA-Z0-9-]+>' => '<controller>/<action>',
-                '<controller:[a-zA-Z0-9-]+>/<action:[a-zA-Z0-9-]+>/<id:\d+>' => '<controller>/<action>',
-                '<module:[a-zA-Z0-9-]+>/<controller:[a-zA-Z0-9-]+>/<action:[a-zA-Z0-9-]+>' =>
+                '<language:(ru|kz|en)>/<controller:[a-zA-Z0-9-]+>/<action:[a-zA-Z0-9-]+>' =>
+                    '<controller>/<action>',
+                '<language:(ru|kz|en)>/<controller:[a-zA-Z0-9-]+>/<action:[a-zA-Z0-9-]+>/<id:\d+>' =>
+                    '<controller>/<action>',
+                '<language:(ru|kz|en)>/<module:[a-zA-Z0-9-]+>/<controller:[a-zA-Z0-9-]+>/<action:[a-zA-Z0-9-]+>' =>
                     '<module>/<controller>/<action>',
-                '<module:[a-zA-Z0-9-]+>/<controller:[a-zA-Z0-9-]+>/<action:[a-zA-Z0-9-]+>/<id:\d+>' =>
+                '<language:(ru|kz|en)>/<module:[a-zA-Z0-9-]+>/<controller:[a-zA-Z0-9-]+>/<action:[a-zA-Z0-9-]+>/<id:\d+>' =>
                     '<module>/<controller>/<action>',
             ],
         ],
@@ -83,6 +100,39 @@ $config = [
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ],
+        ],
+        'debugger' => [
+            'class' => 'my\helpers\Debugger',
+        ],
+        'current' => [
+            'class' => 'my\helpers\Current',
+        ],
+        'exception' => [
+            'class' => 'my\helpers\Exception',
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en-US',
+                    'fileMap' => [
+                        'common' => 'common.php',
+                        'error' => 'error.php',
+                    ],
+                ],
+                'yii' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'en-US',
+                    'basePath' => '@app/messages'
+                ],
+            ],
+        ],
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => 'localhost',
+            'port' => 6379,
+            'database' => 0,
         ],
     ],
     'params' => $params,

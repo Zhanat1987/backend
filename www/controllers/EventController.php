@@ -4,33 +4,24 @@ namespace app\controllers;
 
 use Yii;
 use my\yii2\RestController;
-use yii\base\InvalidParamException;
-use app\services\event\Scan;
-use app\services\event\DynamicInfo;
-use app\services\event\StaticInfo;
+use app\services\event\FactoryMethod;
 
 class EventController extends RestController
 {
 
     public function actionScan()
     {
-        if ($this->getParams('latitude') && $this->getParams('longitude') &&
-            $this->getParams('time') && $this->getParams('threshold') &&
-            $this->getParams('uuid') && $this->getParams('phoneNumber') &&
-            $this->getParams('codeNumber') && $this->getParams('codeNumberType')) {
-            return Scan::execute($this->getParams());
-        }
-        throw new InvalidParamException('Переданы не все обязательные параметры', 400);
+        return FactoryMethod::execute('app\services\event\Scan', $this->getParams());
     }
 
     public function actionStaticInfo()
     {
-        return StaticInfo::execute($this->getParams('codeNumber'), $this->getParams('codeNumberType'));
+        return FactoryMethod::execute('app\services\event\StaticInfo', $this->getParams());
     }
 
     public function actionDynamicInfo()
     {
-        return DynamicInfo::execute($this->getParams('codeNumber'), $this->getParams('codeNumberType'));
+        return FactoryMethod::execute('app\services\event\DynamicInfo', $this->getParams());
     }
 
-} 
+}

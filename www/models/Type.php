@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use app\services\EventStaticInfo;
+use app\services\event\StaticInfo;
 use my\yii2\ActiveRecord;
 
 /**
@@ -11,6 +11,8 @@ use my\yii2\ActiveRecord;
  *
  * @property integer $id
  * @property string $description
+ * @property string $description_ru
+ * @property string $description_kz
  * @property integer $enable
  *
  * @property Product[] $products
@@ -35,7 +37,7 @@ class Type extends ActiveRecord
         return [
             [['description'], 'required'],
             [['enable'], 'integer'],
-            [['description'], 'string', 'max' => 255]
+            [['description', 'description_ru', 'description_kz'], 'string', 'max' => 255]
         ];
     }
 
@@ -47,6 +49,8 @@ class Type extends ActiveRecord
         return [
             'id' => 'ID',
             'description' => 'Description',
+            'description_ru' => 'Description RU',
+            'description_kz' => 'Description KZ',
             'enable' => 'Enable',
         ];
     }
@@ -70,7 +74,7 @@ class Type extends ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            EventStaticInfo::deleteCacheThroughRelations($this->id, 'typeId');
+            StaticInfo::deleteCacheThroughRelations($this->id, 'typeId');
             return true;
         } else {
             return false;

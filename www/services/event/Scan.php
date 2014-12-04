@@ -2,67 +2,110 @@
 
 namespace app\services\event;
 
+use yii\base\Model;
 use app\models\Scan as ModelScan;
 use app\models\User;
 use app\models\Item;
 use app\models\Status;
 use Yii;
 use yii\db\Exception as DbException;
-use Exception;
-use Yandex\Geo\Api;
-use yii\helpers\ArrayHelper;
 use app\services\AddressName;
+use my\app\ConsoleRunner;
 
-class Scan
+/**
+ * Class DynamicInfo
+ * @package app\services\event
+ *
+ * @property string $phoneNumber
+ * @property string $phoneUUID
+ * @property integer $latitude
+ * @property integer $longitude
+ * @property integer $time
+ * @property integer $threshold
+ * @property string $codeNumber
+ * @property integer $codeNumberType
+ */
+class Scan extends Model
 {
 
-    private $_addressName;
+    public $phoneNumber,
+        $phoneUUID,
+        $latitude,
+        $longitude,
+        $time,
+        $threshold,
+        $codeNumber,
+        $codeNumberType;
 
-    public static function execute($params)
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['latitude', 'longitude', 'time', 'threshold', 'codeNumber', 'codeNumberType'], 'required'],
+            [['latitude', 'longitude'], 'number'],
+            [['time', 'threshold', 'codeNumberType'], 'integer'],
+            [['codeNumber'], 'string', 'length' => [9, 32]],
+            [['codeNumberType'], 'in', 'range' => [1, 2]],
+            [['phoneNumber', 'phoneUUID'], 'safe'],
+        ];
+    }
+
+    public function beforeValidate()
+    {
+        $this->latitude = (float) $this->latitude;
+        $this->longitude = (float) $this->longitude;
+        $this->time = (int) $this->time;
+        $this->threshold = (int) $this->threshold;
+        $this->codeNumberType = (int) $this->codeNumberType;
+        return parent::beforeValidate();
+    }
+
+    public function execute()
     {
         $transaction = Yii::$app->db->beginTransaction();
-        $static = new static();
         try {
-            $userId = User::getIdByNumberAndUUID($params['phoneNumber'], $params['uuid']);
-            if (!$userId) {
+            $user = User::getUserByNumberAndUUID($this->phoneNumber, $this->phoneUUID);
+            if (!$user) {
                 $user = new User;
-                $user->phoneNumber = $params['phoneNumber'];
-                $user->phoneUUID = $params['uuid'];
-                if ($user->save()) {
-                    $userId = $user->id;
-                } else {
-                    return $static->getResponseWithModelErrors('user', $user->getErrors());
+                $user->phoneNumber = $this->phoneNumber;
+                $user->phoneUUID = $this->phoneUUID;
+                if (!$user->save()) {
+                    return Yii::$app->current->getResponseWithErrors($user->getErrors(), 'user');
                 }
             }
-            $itemId = Item::getIdByCodeOrNumber($params['codeNumber'], $params['codeNumberType']);
+            $itemId = Item::getIdByCodeOrNumber($this->codeNumber, $this->codeNumberType);
             if (!$itemId) {
                 $item = new Item;
-                if ($params['codeNumberType'] == 1) {
-                    $item->code = $params['codeNumber'];
-                } else if ($params['codeNumberType'] == 2) {
-                    $item->number = $params['codeNumber'];
+                if ($this->codeNumberType == 1) {
+                    $item->code = $this->codeNumber;
+                } else if ($this->codeNumberType == 2) {
+                    $item->number = $this->codeNumber;
                 }
                 $item->statusId = Status::FAKE;
                 if ($item->save()) {
                     $itemId = $item->id;
                 } else {
-                    return $static->getResponseWithModelErrors('item', $item->getErrors());
+                    return Yii::$app->current->getResponseWithErrors($item->getErrors(), 'item');
                 }
             }
             $scan = new ModelScan;
-            $scan->latitude = $params['latitude'];
-            $scan->longitude = $params['longitude'];
-            $scan->time = $params['time'];
-            $scan->threshold = $params['threshold'];
-            $scan->userId = $userId;
+            $scan->latitude = $this->latitude;
+            $scan->longitude = $this->longitude;
+            $scan->time = $this->time;
+            $scan->threshold = $this->threshold;
+            $scan->userId = $user->id;
             $scan->itemId = $itemId;
-            $scan->addressName = AddressName::execute($params['latitude'], $params['longitude']);
             if (!$scan->save()) {
-                return $static->getResponseWithModelErrors('scan', $scan->getErrors());
+                return Yii::$app->current->getResponseWithErrors($scan->getErrors(), 'scan');
             }
+            ConsoleRunner::execute('address-info/index ' . $scan->id .
+                ' ' . $this->latitude . ' ' . $this->longitude);
             $transaction->commit();
         } catch (DbException $e) {
             $transaction->rollBack();
+            Yii::$app->exception->register($e, 'continue');
             return [
                 'code' => $e->getCode(),
                 'status' => 'error',
@@ -70,83 +113,6 @@ class Scan
             ];
         }
         return Yii::$app->params['response']['success'];
-    }
-
-    private function getResponseWithModelErrors($key, $errors)
-    {
-        return ArrayHelper::merge(
-            Yii::$app->params['response']['error'],
-            [
-                'errors' => [
-                    $key => $errors,
-                ],
-            ]
-        );
-    }
-
-    public function getAddressName($latitude, $longitude)
-    {
-        try {
-            $this->_addressName = $this->getAddressNameFromYandex($latitude, $longitude);
-            if ($this->_addressName) {
-                return $this->_addressName;
-            }
-            $this->_addressName = $this->getAddressNameFromWikimapia($latitude, $longitude);
-            if ($this->_addressName) {
-                return $this->_addressName;
-            }
-            $this->_addressName = $this->getAddressNameFromGoogle($latitude, $longitude);
-            if ($this->_addressName) {
-                return $this->_addressName;
-            }
-        } catch (Exception $e) {
-
-        }
-        return 'не определено';
-    }
-
-    private function getAddressNameFromYandex($latitude, $longitude)
-    {
-        $api = new Api;
-        $api->setPoint($longitude, $latitude);
-        $api->setLimit(1)
-            ->setLang(Api::LANG_RU)
-            ->load();
-        $response = $api->getResponse();
-        $collection = $response->getList();
-        if ($collection) {
-            return $collection[0]->getAddress();
-        }
-        return;
-    }
-
-    private function getAddressNameFromWikimapia($latitude, $longitude)
-    {
-        $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&sensor=false&language=ru";
-        $result = file_get_contents($url);
-        if ($result) {
-            $data = json_decode($result, true);
-            if ($data) {
-                return $data['places'][0]['title'] . ', ' . $data['places'][0]['location']['city'] .
-                    ', ' . $data['places'][0]['location']['country'];
-            }
-        }
-        return;
-    }
-
-    private function getAddressNameFromGoogle($latitude, $longitude)
-    {
-        $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&sensor=false&language=ru";
-        $result = file_get_contents($url);
-        if ($result) {
-            $data = json_decode($result, true);
-            if ($data) {
-                return (isset($data['results'][0]['formatted_address']) &&
-                    $data['results'][0]['formatted_address'] != 'undefined') ?
-                    $data['results'][0]['formatted_address'] : null;
-            }
-        }
-        return;
     }
 
 } 

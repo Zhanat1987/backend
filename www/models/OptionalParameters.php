@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 use my\yii2\MongoActiveRecord;
 use yii\mongodb\Query;
-use app\services\EventStaticInfo;
+use app\services\event\StaticInfo;
 
 /**
  * This is the model class for table "type".
@@ -44,8 +44,15 @@ class OptionalParameters extends MongoActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            '_id' => 'ID',
             'typeId' => 'Type',
+            /*
+             * 'optionalParameters' => [
+             *      'language (en, ru, kz)' => [
+             *          'someData'
+             *      ]
+             * ]
+             */
             'optionalParameters' => 'Parameters',
         ];
     }
@@ -56,7 +63,7 @@ class OptionalParameters extends MongoActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\mongodb\ActiveQuery
      */
     public function getType()
     {
@@ -67,13 +74,13 @@ class OptionalParameters extends MongoActiveRecord
     {
         return (new Query)->select('optionalParameters')
             ->from(self::collectionName())
-            ->where('typeId = ' . $typeId);
+            ->where('typeId = ' . $typeId)->one();
     }
 
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            EventStaticInfo::deleteCacheThroughRelations($this->typeId, 'typeId');
+            StaticInfo::deleteCacheThroughRelations($this->typeId, 'typeId');
             return true;
         } else {
             return false;

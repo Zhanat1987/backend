@@ -2,7 +2,10 @@
 
 namespace my\yii2;
 
+use app\services\CheckUser;
+use app\services\Request;
 use Yii;
+use app\models\User;
 use yii\rest\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -24,9 +27,9 @@ class RestController extends Controller
                 'scan' => ['post'],
                 'static-info' => ['get'],
                 'dynamic-info' => ['get'],
-//                'create' => ['post'],
-//                'update' => ['put', 'post'],
-//                'delete' => ['post', 'delete'],
+                'create' => ['post'],
+                'update' => ['put', 'post'],
+                'delete' => ['post', 'delete'],
             ],
         ];
         $behaviors['contentNegotiator'] = [
@@ -45,6 +48,7 @@ class RestController extends Controller
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
+            $this->userAuthenticate($this->getParam('phoneNumber'), $this->getParam('phoneUUID'));
             return TRUE;
         } else {
             return FALSE;
@@ -69,9 +73,10 @@ class RestController extends Controller
     {
         parent::init();
         $this->setParams();
+        $this->setLanguage();
     }
 
-    protected function setParams()
+    private function setParams()
     {
         if (in_array(Yii::$app->request->method, ['POST', 'PUT', 'DELETE'])) {
             if (Yii::$app->request->headers['content-type'] == 'application/json') {
@@ -87,12 +92,30 @@ class RestController extends Controller
         }
     }
 
-    protected function getParams($key = null, $defaultValue = null)
+    public function getParams()
     {
-        if (!$key) {
-            return $this->_params;
-        }
+        return $this->_params;
+    }
+
+    public function getParam($key, $defaultValue = null)
+    {
         return ArrayHelper::getValue($this->_params, $key, $defaultValue);
+    }
+
+    private function setLanguage()
+    {
+        Yii::$app->language = $this->getParam('language') ? : 'en';
+    }
+
+    private function userAuthenticate($phoneNumber, $phoneUUID)
+    {
+        if (!$phoneNumber || !$phoneUUID ||
+            (($user = User::getUserByNumberAndUUID($phoneNumber, $phoneUUID)) && !$user->enable)) {
+            Yii::$app->exception->suspiciousUser();
+        }
+        Request::execute($user->id);
+        CheckUser::single($user->id);
+        return true;
     }
 
 }

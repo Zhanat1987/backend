@@ -19,6 +19,12 @@ vagrantfile-local:
                 mongoWeb:
                     host: '28017'
                     guest: '28017'
+                rabbitMQ:
+                    host: '5672'
+                    guest: '5672'
+                rabbitMQManagement:
+                    host: '15672'
+                    guest: '15672'
         post_up_message: ''
         provider:
             virtualbox:
@@ -157,6 +163,7 @@ php:
             - imagick
             - mbstring
             - mongo
+            - redis
         pear: {  }
         pecl:
             - pecl_http
@@ -256,7 +263,7 @@ mongodb:
         port: '27017'
     databases: {  }
 redis:
-    install: '0'
+    install: '1'
     settings:
         conf_port: '6379'
 mailcatcher:

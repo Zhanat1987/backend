@@ -19,6 +19,7 @@ use my\yii2\ActiveRecord;
  */
 class ItemCompletion extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -68,4 +69,5 @@ class ItemCompletion extends ActiveRecord
     {
         return $this->hasOne(Status::className(), ['id' => 'statusId']);
     }
+
 }

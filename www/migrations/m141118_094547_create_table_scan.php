@@ -17,7 +17,6 @@ class m141118_094547_create_table_scan extends Migration
             'longitude' => Schema::TYPE_FLOAT . '(3,6) NOT NULL',
             'time' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'threshold' => Schema::TYPE_SMALLINT . '(5)',
-            'addressName' => Schema::TYPE_STRING . '(255) NOT NULL',
         ], $this->getTableOptions());
         $this->addForeignKey('itemIdScanFk', '{{%scan}}', 'itemId', '{{%item}}', 'id');
         $this->addForeignKey('userIdScanFk', '{{%scan}}', 'userId', '{{%user}}', 'id');

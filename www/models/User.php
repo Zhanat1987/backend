@@ -3,8 +3,10 @@
 namespace app\models;
 
 use Yii;
-use yii\db\Query;
 use my\yii2\ActiveRecord;
+use yii\caching\TagDependency;
+use yii\db\Query;
+use yii\base\UserException;
 
 /**
  * This is the model class for table "user".
@@ -18,9 +20,12 @@ use my\yii2\ActiveRecord;
  *
  * @property ItemSpecialStatus[] $itemSpecialStatuses
  * @property Scan[] $scans
+ * @property Request[] $requests
  */
 class User extends ActiveRecord
 {
+
+    const TAG_NUMBER_UUID = 'userByNumberAndUUID';
 
     /**
      * @inheritdoc
@@ -81,14 +86,50 @@ class User extends ActiveRecord
         return $this->hasMany(Scan::className(), ['userId' => 'id']);
     }
 
-    public static function getIdByNumberAndUUID($number, $uuid)
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRequests()
     {
-        return (new Query)
-            ->select('id')
-            ->from(self::tableName())
-            ->where('phoneNumber = :phoneNumber AND phoneUUID = :phoneUUID',
-                [':phoneNumber' => $number, ':phoneUUID' => $uuid])
-            ->scalar();
+        return $this->hasMany(Request::className(), ['userId' => 'id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if (!$this->isNewRecord) {
+                Yii::$app->cache->delete($this->phoneNumber . $this->phoneUUID);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getUserByNumberAndUUID($number, $uuid)
+    {
+        $key = $number . $uuid;
+        if (($data = unserialize(Yii::$app->cache->get($key))) === false) {
+            $data = self::find()
+                ->where('phoneNumber = :phoneNumber AND phoneUUID = :phoneUUID',
+                    [':phoneNumber' => $number, ':phoneUUID' => $uuid])
+                ->one();
+            if (!$data) {
+                $data = new self;
+                $data->phoneNumber = $number;
+                $data->phoneUUID = $uuid;
+                if ($data->validate()) {
+                    $data->save(false);
+                } else {
+                    throw new UserException(Yii::t('common', 'Error in user create: ') .
+                        implode(', ', $data->getErrors()), 400);
+                }
+            }
+            $tagDependency = new TagDependency;
+            $tagDependency->tags = self::TAG_NUMBER_UUID;
+            Yii::$app->cache->set($key, serialize($data), Yii::$app->params['duration']['day'], $tagDependency);
+        }
+        return $data;
     }
 
 }

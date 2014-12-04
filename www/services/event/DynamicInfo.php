@@ -2,6 +2,7 @@
 
 namespace app\services\event;
 
+use yii\base\Model;
 use Yii;
 use app\models\Status;
 use app\models\Scan;
@@ -9,16 +10,51 @@ use app\models\Item;
 use app\models\User;
 use yii\helpers\ArrayHelper;
 
-class DynamicInfo
+/**
+ * Class DynamicInfo
+ * @package app\services\event
+ *
+ * @property string $phoneNumber
+ * @property string $phoneUUID
+ * @property string $codeNumber
+ * @property integer $codeNumberType
+ */
+class DynamicInfo extends Model
 {
 
-    public static function execute($codeNumber, $codeNumberType)
+    public $phoneNumber,
+        $phoneUUID,
+        $codeNumber,
+        $codeNumberType;
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['codeNumber', 'codeNumberType'], 'required'],
+            [['codeNumberType'], 'integer'],
+            [['codeNumber'], 'string', 'length' => [9, 32]],
+            [['codeNumberType'], 'in', 'range' => [1, 2]],
+            [['phoneNumber', 'phoneUUID'], 'safe'],
+        ];
+    }
+
+    public function beforeValidate()
+    {
+        $this->codeNumberType = (int) $this->codeNumberType;
+        return parent::beforeValidate();
+    }
+
+    public function execute()
     {
         $itemTable = Item::tableName();
         $statusTable = Status::tableName();
         $scanTable = Scan::tableName();
         $userTable = User::tableName();
-        $condition = $itemTable . ($codeNumberType == 1 ? '.code = :codeNumber' : '.number = :codeNumber');
+        $condition = $itemTable . ($this->codeNumberType == 1 ?
+                '.code = :codeNumber' : '.number = :codeNumber');
         $fields = [
             $itemTable . '.code',
             $itemTable . '.statusId',
@@ -29,7 +65,6 @@ class DynamicInfo
             $scanTable . '.longitude',
             $scanTable . '.time',
             $scanTable . '.threshold',
-            $scanTable . '.addressName',
             $scanTable . '.itemId',
             $scanTable . '.userId',
             $userTable . '.phoneNumber',
@@ -47,7 +82,7 @@ class DynamicInfo
             ->leftJoin([$statusTable], $statusTable . '.id = ' . $itemTable . '.statusId')
             ->leftJoin([$scanTable], $scanTable . '.itemId = ' . $itemTable . '.id')
             ->leftJoin([$userTable], $userTable . '.id = ' . $scanTable . '.userId')
-            ->where($condition, [':codeNumber' => $codeNumber])
+            ->where($condition, [':codeNumber' => $this->codeNumber])
             ->all();
         if (!$rows) {
             return Yii::$app->params['response']['empty'];
@@ -58,7 +93,6 @@ class DynamicInfo
                 ArrayHelper::getValue($row, 'longitude') &&
                 ArrayHelper::getValue($row, 'time') &&
                 ArrayHelper::getValue($row, 'threshold') &&
-                ArrayHelper::getValue($row, 'addressName') &&
                 ArrayHelper::getValue($row, 'phoneNumber') &&
                 ArrayHelper::getValue($row, 'phoneUUID')) {
                 $scans[] = [
@@ -66,9 +100,7 @@ class DynamicInfo
                     'longitude' => $row['longitude'],
                     'time' => $row['time'],
                     'threshold' => $row['threshold'],
-                    'addressName' => $row['addressName'],
-                    'phoneNumber' => $row['phoneNumber'],
-                    'phoneUUID' => $row['phoneUUID'],
+                    'ownDevice' => $this->isOwnDevice($row),
                 ];
             }
         }
@@ -79,6 +111,11 @@ class DynamicInfo
             ],
         ];
         return $response;
+    }
+
+    private function isOwnDevice($data)
+    {
+        return $this->phoneNumber == $data['phoneNumber'] && $this->phoneUUID == $data['phoneUUID'];
     }
 
 } 

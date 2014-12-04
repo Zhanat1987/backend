@@ -2,9 +2,10 @@
 
 namespace app\models;
 
-use app\services\EventStaticInfo;
 use Yii;
 use yii\db\Query;
+use app\services\event\StaticInfo;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "item".
@@ -21,8 +22,9 @@ use yii\db\Query;
  * @property ItemSpecialStatus[] $itemSpecialStatuses
  * @property Scan[] $scans
  */
-class Item extends \yii\db\ActiveRecord
+class Item extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -42,7 +44,8 @@ class Item extends \yii\db\ActiveRecord
             [['code'], 'string', 'max' => 255],
             [['code'], 'unique'],
             [['number'], 'unique'],
-            [['productId'], 'default', 'value' => null],
+            [['productId'], 'default', 'value' => 1],
+            [['statusId'], 'default', 'value' => Status::AUTHENTIC],
         ];
     }
 
@@ -103,7 +106,7 @@ class Item extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            EventStaticInfo::deleteCache($this->code, $this->number);
+            StaticInfo::deleteCache($this->code, $this->number);
             return true;
         } else {
             return false;

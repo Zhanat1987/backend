@@ -48,6 +48,7 @@ class ApiErrorHandler extends ErrorHandler
                             'code' => $exception->getCode(),
                             'file' => $exception->getFile(),
                             'line' => $exception->getLine(),
+//                            'traceAsString' => $exception->getTraceAsString(),
                         ]
                     ]
                 ]

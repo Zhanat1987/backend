@@ -11,6 +11,8 @@ class m141113_064745_create_table_type extends Migration
         $this->createTable('{{%type}}', [
             'id' => Schema::TYPE_PK,
             'description' => Schema::TYPE_STRING . '(255) NOT NULL',
+            'description_ru' => Schema::TYPE_STRING . '(255)',
+            'description_kz' => Schema::TYPE_STRING . '(255)',
             'enable' => Schema::TYPE_SMALLINT . '(1) NOT NULL DEFAULT 1',
         ], $this->getTableOptions());
         echo "create table type: success up\n";

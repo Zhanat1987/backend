@@ -58,4 +58,5 @@ class ClusterType extends ActiveRecord
     {
         return $this->hasMany(Cluster::className(), ['clusterTypeId' => 'id']);
     }
+
 }

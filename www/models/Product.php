@@ -4,7 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\db\Query;
-use app\services\EventStaticInfo;
+use app\services\event\StaticInfo;
+use my\yii2\ActiveRecord;
 
 /**
  * This is the model class for table "product".
@@ -13,7 +14,11 @@ use app\services\EventStaticInfo;
  * @property integer $typeId
  * @property integer $manufacturerId
  * @property string $name
+ * @property string $name_ru
+ * @property string $name_kz
  * @property string $description
+ * @property string $description_ru
+ * @property string $description_kz
  * @property string $devName
  * @property string $barcode
  * @property integer $enable
@@ -23,7 +28,7 @@ use app\services\EventStaticInfo;
  * @property Type $type
  * @property ProductImage[] $productImages
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
 
     /**
@@ -42,7 +47,20 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['typeId', 'manufacturerId', 'name', 'description'], 'required'],
             [['typeId', 'manufacturerId', 'enable'], 'integer'],
-            [['name', 'description', 'devName', 'barcode'], 'string', 'max' => 255]
+            [
+                [
+                    'name',
+                    'name_ru',
+                    'name_kz',
+                    'description',
+                    'description_ru',
+                    'description_kz',
+                    'devName',
+                    'barcode'
+                ],
+                'string',
+                'max' => 255
+            ],
         ];
     }
 
@@ -56,7 +74,11 @@ class Product extends \yii\db\ActiveRecord
             'typeId' => 'Type ID',
             'manufacturerId' => 'Manufacturer ID',
             'name' => 'Name',
+            'name_ru' => 'Name RU',
+            'name_kz' => 'Name KZ',
             'description' => 'Description',
+            'description_ru' => 'Description RU',
+            'description_kz' => 'Description KZ',
             'devName' => 'Dev Name',
             'barcode' => 'Barcode',
             'enable' => 'Enable',
@@ -113,9 +135,8 @@ class Product extends \yii\db\ActiveRecord
             ->all();
         if ($rows) {
             foreach ($rows as $row) {
-                EventStaticInfo::deleteCache($row['code'], $row['number']);
+                StaticInfo::deleteCache($row['code'], $row['number']);
             }
-
         }
     }
 

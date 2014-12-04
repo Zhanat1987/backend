@@ -19,8 +19,10 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "yiisoft/yii2-mongodb": "*",
+        "yiisoft/yii2-redis": "*",
         "videlalvaro/php-amqplib": "2.4.*@dev",
-        "yandex/geo": "dev-master"
+        "yandex/geo": "dev-master",
+        "willdurand/geocoder": "@stable"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

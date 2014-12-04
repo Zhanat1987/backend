@@ -9,26 +9,24 @@ use Yandex\Geo\Api;
 class AddressName
 {
 
-    private $_addressName;
-
     public static function execute($latitude, $longitude)
     {
         try {
             $self = new static();
-            $self->_addressName = $self->getAddressNameFromYandex($latitude, $longitude);
-            if ($self->_addressName) {
-                return $self->_addressName;
+            $addressName = $self->getAddressNameFromYandex($latitude, $longitude);
+            if ($addressName) {
+                return $addressName;
             }
-            $self->_addressName = $self->getAddressNameFromWikimapia($latitude, $longitude);
-            if ($self->_addressName) {
-                return $self->_addressName;
+            $addressName = $self->getAddressNameFromWikimapia($latitude, $longitude);
+            if ($addressName) {
+                return $addressName;
             }
-            $self->_addressName = $self->getAddressNameFromGoogle($latitude, $longitude);
-            if ($self->_addressName) {
-                return $self->_addressName;
+            $addressName = $self->getAddressNameFromGoogle($latitude, $longitude);
+            if ($addressName) {
+                return $addressName;
             }
         } catch (Exception $e) {
-
+            return Yii::$app->exception->register($e, 'continue');
         }
         return 'не определено';
     }
@@ -50,11 +48,11 @@ class AddressName
 
     private function getAddressNameFromWikimapia($latitude, $longitude)
     {
-        $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&sensor=false&language=ru";
+        $url = "http://api.wikimapia.org/?function=place.search&lat=$latitude&lon=$longitude&format=json&key=3207D095-82638BA5-782C7F23-3783AF82-111B4890-6D27F10C-59BCAB60-5011EB10";
         $result = file_get_contents($url);
         if ($result) {
             $data = json_decode($result, true);
-            if ($data) {
+            if (isset($data['places'][0])) {
                 return $data['places'][0]['title'] . ', ' . $data['places'][0]['location']['city'] .
                     ', ' . $data['places'][0]['location']['country'];
             }

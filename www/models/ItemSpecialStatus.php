@@ -19,6 +19,7 @@ use my\yii2\ActiveRecord;
  */
 class ItemSpecialStatus extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -74,4 +75,5 @@ class ItemSpecialStatus extends ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'userId']);
     }
+
 }
