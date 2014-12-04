@@ -12,10 +12,9 @@ class AddressInfoController extends ConsoleController
     public function actionIndex($scanId, $latitude, $longitude)
     {
         if (AddressInfo::execute($scanId, $latitude, $longitude)) {
-            echo ConsoleController::EXIT_CODE_NORMAL;
-        } else {
-            echo ConsoleController::EXIT_CODE_ERROR;
+            return ConsoleController::EXIT_CODE_NORMAL;
         }
+        return ConsoleController::EXIT_CODE_ERROR;
     }
 
 }

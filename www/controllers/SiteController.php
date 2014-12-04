@@ -36,4 +36,9 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionPhpInfo()
+    {
+        phpinfo();
+    }
+
 }

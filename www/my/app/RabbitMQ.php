@@ -29,8 +29,8 @@ class RabbitMQ
     {
         static $instance = null;
         if (null === $instance) {
-            $instance = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-//            $instance = new AMQPStreamConnection('localhost', 5672, 'test', 'test', 'wipon-api.local');
+//            $instance = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+            $instance = new AMQPStreamConnection('localhost', 5672, 'test', 'test', 'wipon-api.local');
         }
 
         return $instance;

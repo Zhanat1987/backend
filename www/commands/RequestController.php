@@ -46,10 +46,10 @@ class RequestController extends ConsoleController
             }
             $channel->close();
             $connection->close();
-            echo ConsoleController::EXIT_CODE_NORMAL;
+            return ConsoleController::EXIT_CODE_NORMAL;
         } catch (Exception $e) {
             Yii::$app->exception->register($e, 'continue');
-            echo ConsoleController::EXIT_CODE_ERROR;
+            return ConsoleController::EXIT_CODE_ERROR;
         }
     }
 

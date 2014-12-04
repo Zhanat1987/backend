@@ -67,14 +67,6 @@ class Scan extends Model
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $user = User::getUserByNumberAndUUID($this->phoneNumber, $this->phoneUUID);
-            if (!$user) {
-                $user = new User;
-                $user->phoneNumber = $this->phoneNumber;
-                $user->phoneUUID = $this->phoneUUID;
-                if (!$user->save()) {
-                    return Yii::$app->current->getResponseWithErrors($user->getErrors(), 'user');
-                }
-            }
             $itemId = Item::getIdByCodeOrNumber($this->codeNumber, $this->codeNumberType);
             if (!$itemId) {
                 $item = new Item;
