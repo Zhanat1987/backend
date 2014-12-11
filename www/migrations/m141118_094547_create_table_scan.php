@@ -20,7 +20,7 @@ class m141118_094547_create_table_scan extends Migration
         ], $this->getTableOptions());
         $this->addForeignKey('itemIdScanFk', '{{%scan}}', 'itemId', '{{%item}}', 'id');
         $this->addForeignKey('userIdScanFk', '{{%scan}}', 'userId', '{{%user}}', 'id');
-        $this->addForeignKey('clusterIdScanFk', '{{%scan}}', 'clusterId', '{{%cluster}}', 'id');
+//        $this->addForeignKey('clusterIdScanFk', '{{%scan}}', 'clusterId', '{{%cluster}}', 'id');
         echo "create table scan: success up\n";
     }
 
@@ -28,7 +28,7 @@ class m141118_094547_create_table_scan extends Migration
     {
         $this->dropForeignKey('itemIdScanFk', '{{%scan}}');
         $this->dropForeignKey('userIdScanFk', '{{%scan}}');
-        $this->dropForeignKey('clusterIdScanFk', '{{%scan}}');
+//        $this->dropForeignKey('clusterIdScanFk', '{{%scan}}');
         $this->dropTable('{{%scan}}');
         echo "create table scan: success down\n";
     }

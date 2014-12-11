@@ -21,18 +21,31 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-
+        $response = [
+            'unit' => 'test'
+        ];
+//        return $response;
+//        VarDumper::dump($response, 10, true);
+//        echo 1;
+//        VarDumper::dump(base64_encode('wiponwiponJ/Y3}T6VP%jB-t,'), 10, true);
+//        $json = json_encode([
+//            'latitude' => 51.132349,
+//            'longitude' => 71.402818,
+//            'time' => 1391310060,
+//            'device' => '482C6A1E593D',
+//        ]);
+//        VarDumper::dump($json, 10, true);
     }
 
     public function actionHtml()
     {
         try {
-            $result = 'test';
+            $test = [];
         } catch (Exception $e) {
             Yii::$app->exception->register($e);
         }
         return $this->render('html', [
-            'test' => $result ? : false,
+            'test' => $test ? : false,
         ]);
     }
 

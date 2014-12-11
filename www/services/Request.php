@@ -37,7 +37,6 @@ class Request
             Yii::$app->exception->register($e, 'continue');
             return false;
         }
-
     }
 
 } 

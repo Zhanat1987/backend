@@ -15,11 +15,11 @@ class Migration extends Yii2Migration
     /**
      * @return string return sql query, which set table options
      */
-    public function getTableOptions()
+    public function getTableOptions($engine = 'InnoDB')
     {
         if ($this->db->driverName === 'mysql') {
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
-            $this->_tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+            $this->_tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=' . $engine;
         }
         return $this->_tableOptions;
     }

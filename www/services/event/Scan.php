@@ -9,7 +9,6 @@ use app\models\Item;
 use app\models\Status;
 use Yii;
 use yii\db\Exception as DbException;
-use app\services\AddressName;
 use my\app\ConsoleRunner;
 
 /**
@@ -66,7 +65,7 @@ class Scan extends Model
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $user = User::getUserByNumberAndUUID($this->phoneNumber, $this->phoneUUID);
+            $user = User::getUserByUUID($this->phoneUUID);
             $itemId = Item::getIdByCodeOrNumber($this->codeNumber, $this->codeNumberType);
             if (!$itemId) {
                 $item = new Item;
@@ -92,9 +91,11 @@ class Scan extends Model
             if (!$scan->save()) {
                 return Yii::$app->current->getResponseWithErrors($scan->getErrors(), 'scan');
             }
+            $transaction->commit();
             ConsoleRunner::execute('address-info/index ' . $scan->id .
                 ' ' . $this->latitude . ' ' . $this->longitude);
-            $transaction->commit();
+            ConsoleRunner::execute('scan-cluster/index ' . $scan->id .
+                ' ' . $this->latitude . ' ' . $this->longitude . ' ' . $this->threshold);
         } catch (DbException $e) {
             $transaction->rollBack();
             Yii::$app->exception->register($e, 'continue');

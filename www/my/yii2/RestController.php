@@ -6,7 +6,9 @@ use app\services\CheckUser;
 use app\services\Request;
 use Yii;
 use app\models\User;
+use yii\helpers\Json;
 use yii\rest\Controller;
+use yii\web\BadRequestHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\filters\ContentNegotiator;
@@ -15,7 +17,7 @@ use yii\helpers\ArrayHelper;
 class RestController extends Controller
 {
 
-    private $_params;
+    private $_params, $_newToken;
 
     public function behaviors()
     {
@@ -23,13 +25,13 @@ class RestController extends Controller
         $behaviors['verbs'] = [
             'class' => VerbFilter::className(),
             'actions' => [
-//                'index' => ['get', 'post', 'put', 'delete'],
+                'index' => ['get', 'post', 'put', 'delete'],
+//                'create' => ['post'],
+//                'update' => ['put', 'post'],
+//                'delete' => ['post', 'delete'],
                 'scan' => ['post'],
                 'static-info' => ['get'],
                 'dynamic-info' => ['get'],
-                'create' => ['post'],
-                'update' => ['put', 'post'],
-                'delete' => ['post', 'delete'],
             ],
         ];
         $behaviors['contentNegotiator'] = [
@@ -48,7 +50,8 @@ class RestController extends Controller
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            $this->userAuthenticate($this->getParam('phoneNumber'), $this->getParam('phoneUUID'));
+            $this->secure(Yii::$app->request->headers);
+            $this->userAuthenticate($this->getParam('phoneUUID'));
             return TRUE;
         } else {
             return FALSE;
@@ -63,7 +66,13 @@ class RestController extends Controller
     public function afterAction($action, $result)
     {
         $result = parent::afterAction($action, $result);
+        if ($this->_newToken) {
+            $result = $this->addNewToken($result);
+        }
         return $result;
+//        return [
+//            'test' => 'false00',
+//        ];
     }
 
     /**
@@ -73,6 +82,7 @@ class RestController extends Controller
     {
         parent::init();
         $this->setParams();
+        $this->setUUID();
         $this->setLanguage();
     }
 
@@ -82,7 +92,11 @@ class RestController extends Controller
             if (Yii::$app->request->headers['content-type'] == 'application/json') {
                 $inputJSON = file_get_contents('php://input');
                 if ($inputJSON) {
-                    parse_str($inputJSON, $this->_params);
+                    if ($inputJSON[0] == '{' && substr($inputJSON, -1) == '}') {
+                        $this->_params = Json::decode($inputJSON);
+                    } else {
+                        parse_str($inputJSON, $this->_params);
+                    }
                 }
             } else {
                 $this->_params = Yii::$app->request->getBodyParams();
@@ -107,15 +121,47 @@ class RestController extends Controller
         Yii::$app->language = $this->getParam('language') ? : 'en';
     }
 
-    private function userAuthenticate($phoneNumber, $phoneUUID)
+    private function userAuthenticate($phoneUUID)
     {
-        if (!$phoneNumber || !$phoneUUID ||
-            (($user = User::getUserByNumberAndUUID($phoneNumber, $phoneUUID)) && !$user->enable)) {
+        if (!$phoneUUID || (($user = User::getUserByUUID($phoneUUID)) && !$user->enable)) {
             Yii::$app->exception->suspiciousUser();
         }
         Request::execute($user->id);
         CheckUser::single($user->id);
         return true;
+    }
+
+    private function secure($headers)
+    {
+        if (isset($headers['token']) && isset($headers['key'])) {
+            if (Yii::$app->cache->get($headers['token'])) {
+                return true;
+            }
+            if (base64_decode($headers['key']) == Yii::$app->params['restKey']) {
+                $this->_newToken = true;
+                return true;
+            }
+            throw new BadRequestHttpException(Yii::t('error', 'Invalid key value'), 400);
+        }
+        throw new BadRequestHttpException(Yii::t('error', 'Not isset token and key parameters in headers'), 400);
+    }
+
+    private function addNewToken($result)
+    {
+        $accessToken = Yii::$app->security->generateRandomString();
+        Yii::$app->cache->set($accessToken, true, Yii::$app->params['duration']['day']);
+        $result['token'] = $accessToken;
+        return $result;
+    }
+
+    private function setUUID()
+    {
+        $headers = Yii::$app->request->headers;
+        if (isset($headers['phoneUUID'])) {
+            $this->_params['phoneUUID'] = $headers['phoneUUID'];
+        } else {
+            throw new BadRequestHttpException(Yii::t('error', 'Not isset phoneUUID parameter in headers'), 400);
+        }
     }
 
 }

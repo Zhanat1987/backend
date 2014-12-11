@@ -12,19 +12,20 @@ class m141118_093135_create_table_cluster extends Migration
             'id' => Schema::TYPE_PK,
             'clusterTypeId' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'description' => Schema::TYPE_STRING . '(255) NOT NULL',
-            'latitude' => Schema::TYPE_FLOAT . '(3,6) NOT NULL',
-            'longitude' => Schema::TYPE_FLOAT . '(3,6) NOT NULL',
-            'radius' => Schema::TYPE_SMALLINT . '(5)',
+            'latitude' => Schema::TYPE_FLOAT . '(9,6) NOT NULL',
+            'longitude' => Schema::TYPE_FLOAT . '(9,6) NOT NULL',
             'fakeDistributor' => Schema::TYPE_SMALLINT . '(1)',
             'enable' => Schema::TYPE_SMALLINT . '(1)',
-        ], $this->getTableOptions());
-        $this->addForeignKey('clusterTypeIdClusterFk', '{{%cluster}}', 'clusterTypeId', '{{%clusterType}}', 'id');
+        ], $this->getTableOptions('MyISAM'));
+        $this->createIndex('clusterLatitude', '{{%cluster}}', 'latitude');
+        $this->createIndex('clusterLongitude', '{{%cluster}}', 'longitude');
+//        $this->addForeignKey('clusterTypeIdClusterFk', '{{%cluster}}', 'clusterTypeId', '{{%clusterType}}', 'id');
         echo "create table cluster: success up\n";
     }
 
     public function safeDown()
     {
-        $this->dropForeignKey('clusterTypeIdClusterFk', '{{%cluster}}');
+//        $this->dropForeignKey('clusterTypeIdClusterFk', '{{%cluster}}');
         $this->dropTable('{{%cluster}}');
         echo "create table cluster: success down\n";
     }

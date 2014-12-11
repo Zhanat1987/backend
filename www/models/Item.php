@@ -39,7 +39,7 @@ class Item extends ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'statusId'], 'required'],
+//            [['code', 'statusId'], 'required'],
             [['number', 'statusId'], 'integer'],
             [['code'], 'string', 'max' => 255],
             [['code'], 'unique'],

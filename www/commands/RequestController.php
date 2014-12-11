@@ -53,4 +53,15 @@ class RequestController extends ConsoleController
         }
     }
 
+    public function actionTest()
+    {
+        try {
+
+            return ConsoleController::EXIT_CODE_NORMAL;
+        } catch (Exception $e) {
+            Yii::$app->exception->register($e, 'continue');
+            return ConsoleController::EXIT_CODE_ERROR;
+        }
+    }
+
 }

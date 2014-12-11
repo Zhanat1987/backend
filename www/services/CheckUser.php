@@ -101,7 +101,7 @@ class CheckUser
     {
         User::updateAll(['enable' => 0], 'id IN (:ids)', [':ids' => $ids]);
         Request::updateAll(['enable' => 0], ['userId' => ['$in' => [explode(',', $ids)]]]);
-        TagDependency::invalidate(Yii::$app->cache, User::TAG_NUMBER_UUID);
+        TagDependency::invalidate(Yii::$app->cache, User::TAG_UUID);
         $message = 'в ' . date(Yii::$app->params['format']['dateTime'], $time) .
             ' были заблокированы пользователи с id: ' . $ids;
         Yii::info($message, 'disableUser');

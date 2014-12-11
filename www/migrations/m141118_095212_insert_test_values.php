@@ -347,6 +347,7 @@ class m141118_095212_insert_test_values extends Migration
         $this->truncateTable('{{%product}}');
         $this->truncateTable('{{%item}}');
         $this->truncateTable('{{%scan}}');
+        $this->truncateTable('{{%clusterType}}');
         $this->execute('SET FOREIGN_KEY_CHECKS = 1;');
         echo "insert test values: success down\n";
     }

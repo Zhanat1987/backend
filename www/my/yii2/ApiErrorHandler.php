@@ -26,7 +26,7 @@ class ApiErrorHandler extends ErrorHandler
             $response = new Response();
         }
         $response->data = $this->convertExceptionToArray($exception);
-        $response->setStatusCode($exception->statusCode);
+        $response->setStatusCode($exception->statusCode ? : $exception->getCode());
         $response->format = Response::FORMAT_JSON;
         $response->send();
     }

@@ -13,7 +13,6 @@ use my\yii2\ActiveRecord;
  * @property string $description
  * @property double $latitude
  * @property double $longitude
- * @property integer $radius
  * @property integer $fakeDistributor
  * @property integer $enable
  *
@@ -22,6 +21,7 @@ use my\yii2\ActiveRecord;
  */
 class Cluster extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -36,12 +36,12 @@ class Cluster extends ActiveRecord
     public function rules()
     {
         return [
-            [['clusterTypeId', 'description', 'latitude', 'longitude'], 'required'],
-            [['clusterTypeId', 'fakeDistributor', 'enable', 'radius'], 'integer'],
+            [['latitude', 'longitude'], 'required'],
+            [['clusterTypeId', 'fakeDistributor', 'enable'], 'integer'],
             [['latitude', 'longitude'], 'number'],
             [['description'], 'string', 'max' => 255],
             [['fakeDistributor'], 'default', 'value' => 0],
-            [['enable'], 'default', 'value' => 1],
+            [['clusterTypeId', 'enable'], 'default', 'value' => 1],
         ];
     }
 
@@ -56,7 +56,6 @@ class Cluster extends ActiveRecord
             'description' => 'Description',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
-            'radius' => 'Radius',
             'fakeDistributor' => 'Fake Distributor',
             'enable' => 'Enable',
         ];

@@ -25,7 +25,7 @@ use yii\base\UserException;
 class User extends ActiveRecord
 {
 
-    const TAG_NUMBER_UUID = 'userByNumberAndUUID';
+    const TAG_UUID = 'userByUUID';
 
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class User extends ActiveRecord
     public function rules()
     {
         return [
-            [['phoneNumber', 'phoneUUID'], 'required'],
+            [['phoneUUID'], 'required'],
             [['latitude', 'longitude'], 'number'],
             [['enable'], 'integer'],
             [['enable'], 'default', 'value' => 1],
@@ -98,7 +98,7 @@ class User extends ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if (!$this->isNewRecord) {
-                Yii::$app->cache->delete($this->phoneNumber . $this->phoneUUID);
+                Yii::$app->cache->delete($this->phoneUUID);
             }
             return true;
         } else {
@@ -106,17 +106,14 @@ class User extends ActiveRecord
         }
     }
 
-    public static function getUserByNumberAndUUID($number, $uuid)
+    public static function getUserByUUID($uuid)
     {
-        $key = $number . $uuid;
-        if (($data = unserialize(Yii::$app->cache->get($key))) === false) {
+        if (($data = unserialize(Yii::$app->cache->get($uuid))) === false) {
             $data = self::find()
-                ->where('phoneNumber = :phoneNumber AND phoneUUID = :phoneUUID',
-                    [':phoneNumber' => $number, ':phoneUUID' => $uuid])
+                ->where('phoneUUID = :phoneUUID', [':phoneUUID' => $uuid])
                 ->one();
             if (!$data) {
                 $data = new self;
-                $data->phoneNumber = $number;
                 $data->phoneUUID = $uuid;
                 if ($data->validate()) {
                     $data->save(false);
@@ -126,8 +123,8 @@ class User extends ActiveRecord
                 }
             }
             $tagDependency = new TagDependency;
-            $tagDependency->tags = self::TAG_NUMBER_UUID;
-            Yii::$app->cache->set($key, serialize($data), Yii::$app->params['duration']['day'], $tagDependency);
+            $tagDependency->tags = self::TAG_UUID;
+            Yii::$app->cache->set($uuid, serialize($data), Yii::$app->params['duration']['day'], $tagDependency);
         }
         return $data;
     }

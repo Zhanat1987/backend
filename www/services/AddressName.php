@@ -48,7 +48,8 @@ class AddressName
 
     private function getAddressNameFromWikimapia($latitude, $longitude)
     {
-        $url = "http://api.wikimapia.org/?function=place.search&lat=$latitude&lon=$longitude&format=json&key=3207D095-82638BA5-782C7F23-3783AF82-111B4890-6D27F10C-59BCAB60-5011EB10";
+        $url = "http://api.wikimapia.org/?function=place.search&lat=$latitude&lon=$longitude&format=json&key=" .
+            Yii::$app->params['keys']['wikimapia'];
         $result = file_get_contents($url);
         if ($result) {
             $data = json_decode($result, true);

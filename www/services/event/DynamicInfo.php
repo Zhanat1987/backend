@@ -115,7 +115,7 @@ class DynamicInfo extends Model
 
     private function isOwnDevice($data)
     {
-        return $this->phoneNumber == $data['phoneNumber'] && $this->phoneUUID == $data['phoneUUID'];
+        return $this->phoneUUID == $data['phoneUUID'];
     }
 
 } 

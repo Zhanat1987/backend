@@ -25,7 +25,7 @@ class AddressInfo
                 new GoogleMapsProvider($adapter, $locale, 'Russia', true),
                 new YandexProvider($adapter, $locale),
                 new OpenStreetMapProvider($adapter, $locale),
-                new BingMapsProvider($adapter, 'AuWCSOxF0zn8vjh8fJtKbl1xULyH1kduD83Sq_XV2JWSA_AS3j2kVI7J8fAEvGO8', 'ru_RU'),
+                new BingMapsProvider($adapter, Yii::$app->params['keys']['bingMaps'], 'ru_RU'),
             ]);
             $geocoder = new Geocoder;
             $geocoder->registerProvider($chain);

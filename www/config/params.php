@@ -37,4 +37,10 @@ return [
         'date' => 'd/m/Y',
         'time' => 'H:i:s',
     ],
+    'keys' => [
+        'google' => 'AIzaSyBTpF1YwdNSuQNxCOWkfvjBY4lJzKtAcb4',
+        'wikimapia' => '3207D095-82638BA5-782C7F23-3783AF82-111B4890-6D27F10C-59BCAB60-5011EB10',
+        'bingMaps' => 'AuWCSOxF0zn8vjh8fJtKbl1xULyH1kduD83Sq_XV2JWSA_AS3j2kVI7J8fAEvGO8',
+    ],
+    'restKey' => 'wiponwiponJ/Y3}T6VP%jB-t,',
 ];
