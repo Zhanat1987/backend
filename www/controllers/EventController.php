@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use my\yii2\RestController;
-use app\services\event\FactoryMethod;
+use my\app\FactoryMethod;
 
 class EventController extends RestController
 {

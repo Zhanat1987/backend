@@ -11,7 +11,7 @@ use my\yii2\ActiveRecord;
  * @property integer $id
  * @property string $description
  * @property integer $type
- * @property integer $threshold
+ * @property integer $accuracy
  * @property integer $enable
  *
  * @property Cluster[] $clusters
@@ -33,8 +33,8 @@ class ClusterType extends ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'threshold'], 'required'],
-            [['type', 'threshold'], 'integer'],
+            [['type', 'accuracy'], 'required'],
+            [['type', 'accuracy'], 'integer'],
             [['description'], 'string', 'max' => 255],
             [['enable'], 'default', 'value' => 1],
         ];
@@ -49,7 +49,7 @@ class ClusterType extends ActiveRecord
             'id' => 'ID',
             'description' => 'Description',
             'type' => 'Type',
-            'threshold' => 'Threshold',
+            'accuracy' => 'accuracy',
             'enable' => 'Enable',
         ];
     }

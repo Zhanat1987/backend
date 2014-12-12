@@ -1946,12 +1946,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "a0913638efd5237ff700e92b8444b6a71278f1f6"
+                "reference": "b9c19ce1bd9a51d3f42665973088f2e2b82db240"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/a0913638efd5237ff700e92b8444b6a71278f1f6",
-                "reference": "a0913638efd5237ff700e92b8444b6a71278f1f6",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b9c19ce1bd9a51d3f42665973088f2e2b82db240",
+                "reference": "b9c19ce1bd9a51d3f42665973088f2e2b82db240",
                 "shasum": ""
             },
             "require": {
@@ -1984,7 +1984,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-08 08:43:57"
+            "time": "2014-12-09 17:32:32"
         },
         {
             "name": "videlalvaro/php-amqplib",
@@ -2684,12 +2684,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "53709203b74decf9f579e7a9366a5f4962d12e7a"
+                "reference": "3ef3bbd3c0e02445c0704b7c14f1dc1ab4a4fb91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/53709203b74decf9f579e7a9366a5f4962d12e7a",
-                "reference": "53709203b74decf9f579e7a9366a5f4962d12e7a",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/3ef3bbd3c0e02445c0704b7c14f1dc1ab4a4fb91",
+                "reference": "3ef3bbd3c0e02445c0704b7c14f1dc1ab4a4fb91",
                 "shasum": ""
             },
             "require": {
@@ -2725,7 +2725,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2014-12-07 16:46:05"
+            "time": "2014-12-11 17:44:39"
         }
     ],
     "aliases": [],

@@ -86,7 +86,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
-                'scan-cluster/index/<scanId:\d+>/<latitude>/<longitude>/<threshold:\d+>' =>
+                'scan-cluster/index/<scanId:\d+>/<latitude>/<longitude>/<accuracy:\d+>' =>
                     'scan-cluster/index',
                 'address-info/index/<scanId:\d+>/<latitude>/<longitude>' =>
                     'address-info/index',

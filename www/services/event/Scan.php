@@ -20,7 +20,7 @@ use my\app\ConsoleRunner;
  * @property integer $latitude
  * @property integer $longitude
  * @property integer $time
- * @property integer $threshold
+ * @property integer $accuracy
  * @property string $codeNumber
  * @property integer $codeNumberType
  */
@@ -32,7 +32,7 @@ class Scan extends Model
         $latitude,
         $longitude,
         $time,
-        $threshold,
+        $accuracy,
         $codeNumber,
         $codeNumberType;
 
@@ -42,9 +42,9 @@ class Scan extends Model
     public function rules()
     {
         return [
-            [['latitude', 'longitude', 'time', 'threshold', 'codeNumber', 'codeNumberType'], 'required'],
+            [['latitude', 'longitude', 'time', 'accuracy', 'codeNumber', 'codeNumberType'], 'required'],
             [['latitude', 'longitude'], 'number'],
-            [['time', 'threshold', 'codeNumberType'], 'integer'],
+            [['time', 'accuracy', 'codeNumberType'], 'integer'],
             [['codeNumber'], 'string', 'length' => [9, 32]],
             [['codeNumberType'], 'in', 'range' => [1, 2]],
             [['phoneNumber', 'phoneUUID'], 'safe'],
@@ -56,7 +56,7 @@ class Scan extends Model
         $this->latitude = (float) $this->latitude;
         $this->longitude = (float) $this->longitude;
         $this->time = (int) $this->time;
-        $this->threshold = (int) $this->threshold;
+        $this->accuracy = (int) $this->accuracy;
         $this->codeNumberType = (int) $this->codeNumberType;
         return parent::beforeValidate();
     }
@@ -85,7 +85,7 @@ class Scan extends Model
             $scan->latitude = $this->latitude;
             $scan->longitude = $this->longitude;
             $scan->time = $this->time;
-            $scan->threshold = $this->threshold;
+            $scan->accuracy = $this->accuracy;
             $scan->userId = $user->id;
             $scan->itemId = $itemId;
             if (!$scan->save()) {
@@ -95,7 +95,7 @@ class Scan extends Model
             ConsoleRunner::execute('address-info/index ' . $scan->id .
                 ' ' . $this->latitude . ' ' . $this->longitude);
             ConsoleRunner::execute('scan-cluster/index ' . $scan->id .
-                ' ' . $this->latitude . ' ' . $this->longitude . ' ' . $this->threshold);
+                ' ' . $this->latitude . ' ' . $this->longitude . ' ' . $this->accuracy);
         } catch (DbException $e) {
             $transaction->rollBack();
             Yii::$app->exception->register($e, 'continue');

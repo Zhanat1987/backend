@@ -10,10 +10,10 @@ use app\models\Cluster;
 class ScanCluster
 {
 
-    public static function execute($scanId, $latitude, $longitude, $threshold)
+    public static function execute($scanId, $latitude, $longitude, $accuracy)
     {
         try {
-            $sql = "CALL getNearestCluster($latitude, $longitude, $threshold);";
+            $sql = "CALL getNearestCluster($latitude, $longitude, $accuracy);";
             $cluster = Yii::$app->db->createCommand($sql)->queryOne();
             if (!$cluster) {
                 $cluster = new Cluster;

@@ -56,7 +56,7 @@ class StaticInfo extends Model
             $fields = [
                 $itemTable . '.code',
                 $itemTable . '.number',
-                $itemTable . '.id',
+                $itemTable . '.id AS itemId',
                 $productTable . '.name AS productName',
                 $productTable . '.name_ru AS productNameRU',
                 $productTable . '.name_kz AS productNameKZ',
@@ -120,6 +120,7 @@ class StaticInfo extends Model
                 'number' => ArrayHelper::getValue($row, 'number'),
                 'images' => $productImages,
                 'brandLogo' => ArrayHelper::getValue($row, 'brandLogo'),
+                'itemId' => ArrayHelper::getValue($row, 'itemId'),
                 'description' => ArrayHelper::getValue($row, 'productDescription' .
                     Yii::$app->current->getLanguagePostfix()),
             ],

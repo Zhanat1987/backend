@@ -15,7 +15,7 @@ use my\yii2\ActiveRecord;
  * @property double $latitude
  * @property double $longitude
  * @property integer $time
- * @property integer $threshold
+ * @property integer $accuracy
  *
  * @property Cluster $cluster
  * @property Item $item
@@ -40,7 +40,7 @@ class Scan extends ActiveRecord
     {
         return [
             [['itemId', 'userId', 'latitude', 'longitude', 'time'], 'required'],
-            [['itemId', 'userId', 'time', 'threshold', 'clusterId'], 'integer'],
+            [['itemId', 'userId', 'time', 'accuracy', 'clusterId'], 'integer'],
             [['latitude', 'longitude'], 'number'],
         ];
     }
@@ -58,7 +58,7 @@ class Scan extends ActiveRecord
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
             'time' => 'Time',
-            'threshold' => 'Threshold',
+            'accuracy' => 'accuracy',
         ];
     }
 

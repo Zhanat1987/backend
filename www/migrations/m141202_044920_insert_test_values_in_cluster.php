@@ -8,7 +8,6 @@ class m141202_044920_insert_test_values_in_cluster extends Migration
 
     public function safeUp()
     {
-        $faker = Factory::create();
         $this->execute('SET FOREIGN_KEY_CHECKS = 0;');
         $clusterTypeRows = [
             [
@@ -52,32 +51,33 @@ class m141202_044920_insert_test_values_in_cluster extends Migration
             [
                 'description',
                 'type',
-                'threshold',
+                'accuracy',
                 'enable',
             ], $clusterTypeRows);
-        $clusterRows = [];
-        for ($i = 1; $i <= 10000000; ++$i) {
-            $clusterRows[] = [
-                mt_rand(1, 2),
-                $faker->address,
-                $faker->latitude,
-                $faker->longitude,
-                0,
-                1,
-            ];
-            if (($i % 10000) === 0) {
-                $this->batchInsert('{{%cluster}}',
-                    [
-                        'clusterTypeId',
-                        'description',
-                        'latitude',
-                        'longitude',
-                        'fakeDistributor',
-                        'enable',
-                    ], $clusterRows);
-                $clusterRows = [];
-            }
-        }
+//        $faker = Factory::create();
+//        $clusterRows = [];
+//        for ($i = 1; $i <= 10000000; ++$i) {
+//            $clusterRows[] = [
+//                mt_rand(1, 2),
+//                $faker->address,
+//                $faker->latitude,
+//                $faker->longitude,
+//                0,
+//                1,
+//            ];
+//            if (($i % 10000) === 0) {
+//                $this->batchInsert('{{%cluster}}',
+//                    [
+//                        'clusterTypeId',
+//                        'description',
+//                        'latitude',
+//                        'longitude',
+//                        'fakeDistributor',
+//                        'enable',
+//                    ], $clusterRows);
+//                $clusterRows = [];
+//            }
+//        }
         $this->execute('SET FOREIGN_KEY_CHECKS = 1;');
         echo "insert test values in cluster: success up\n";
     }

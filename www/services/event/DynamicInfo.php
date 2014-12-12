@@ -64,7 +64,7 @@ class DynamicInfo extends Model
             $scanTable . '.latitude',
             $scanTable . '.longitude',
             $scanTable . '.time',
-            $scanTable . '.threshold',
+            $scanTable . '.accuracy',
             $scanTable . '.itemId',
             $scanTable . '.userId',
             $userTable . '.phoneNumber',
@@ -92,14 +92,14 @@ class DynamicInfo extends Model
             if (ArrayHelper::getValue($row, 'latitude') &&
                 ArrayHelper::getValue($row, 'longitude') &&
                 ArrayHelper::getValue($row, 'time') &&
-                ArrayHelper::getValue($row, 'threshold') &&
+                ArrayHelper::getValue($row, 'accuracy') &&
                 ArrayHelper::getValue($row, 'phoneNumber') &&
                 ArrayHelper::getValue($row, 'phoneUUID')) {
                 $scans[] = [
                     'latitude' => $row['latitude'],
                     'longitude' => $row['longitude'],
                     'time' => $row['time'],
-                    'threshold' => $row['threshold'],
+                    'accuracy' => $row['accuracy'],
                     'ownDevice' => $this->isOwnDevice($row),
                 ];
             }

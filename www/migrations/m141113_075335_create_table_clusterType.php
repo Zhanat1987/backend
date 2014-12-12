@@ -12,7 +12,7 @@ class m141113_075335_create_table_clusterType extends Migration
             'id' => Schema::TYPE_PK,
             'description' => Schema::TYPE_STRING . '(255)',
             'type' => Schema::TYPE_INTEGER . '(11) NOT NULL',
-            'threshold' => Schema::TYPE_SMALLINT . '(5)',
+            'accuracy' => Schema::TYPE_SMALLINT . '(5)',
             'enable' => Schema::TYPE_SMALLINT . '(1)',
         ], $this->getTableOptions());
         echo "create table clusterType: success up\n";

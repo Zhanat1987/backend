@@ -236,7 +236,6 @@ class m141118_095212_insert_test_values extends Migration
                 1391310060,
                 1,
                 500,
-                'Астана, Развлекательный Центр "Хан Шатыр"',
                 1,
             ],
             [
@@ -246,7 +245,6 @@ class m141118_095212_insert_test_values extends Migration
                 1391314560,
                 2,
                 500,
-                'Алматы, проспект Аль-Фараби, 95',
                 2,
             ],
             [
@@ -256,7 +254,6 @@ class m141118_095212_insert_test_values extends Migration
                 1415592660,
                 3,
                 500,
-                'Астана, Рамстор Астана Мега',
                 3,
             ],
             [
@@ -266,7 +263,6 @@ class m141118_095212_insert_test_values extends Migration
                 1409652187,
                 4,
                 500,
-                'Астана, Рамстор Астана Мега',
                 4,
             ],
             [
@@ -276,7 +272,6 @@ class m141118_095212_insert_test_values extends Migration
                 1409987522,
                 5,
                 500,
-                'Алматы, просп. Райымбека, 514а',
                 5,
             ],
             [
@@ -286,7 +281,6 @@ class m141118_095212_insert_test_values extends Migration
                 1414584660,
                 6,
                 500,
-                'Астана, ТРЦ Asia Park',
                 6,
             ],
             [
@@ -296,7 +290,6 @@ class m141118_095212_insert_test_values extends Migration
                 1411906322,
                 7,
                 500,
-                'Астана, ТРЦ Asia Park',
                 7,
             ],
             [
@@ -306,7 +299,6 @@ class m141118_095212_insert_test_values extends Migration
                 1413033122,
                 8,
                 500,
-                'Алматы, проспект Аль-Фараби, 95',
                 8,
             ],
         ];
@@ -318,7 +310,6 @@ class m141118_095212_insert_test_values extends Migration
                 $faker->unixTime,
                 $i + 1,
                 $faker->randomNumber(),
-                $faker->address,
                 $i + 1,
             ];
         }
@@ -329,8 +320,7 @@ class m141118_095212_insert_test_values extends Migration
                 'longitude',
                 'time',
                 'userId',
-                'threshold',
-                'addressName',
+                'accuracy',
                 'clusterId',
             ], $scanRows);
         $this->execute('SET FOREIGN_KEY_CHECKS = 1;');
